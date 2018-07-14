@@ -16,61 +16,34 @@ namespace DrawBlipBuilderFlow
             var flowFactory = new BlipBuilderFlowFactory();
             var flow = flowFactory.Build(builderFlowJson);
 
-            //foreach (Box flowBox in flow.Boxes)
-            //{
-            //    if (flowBox..Equals("59413693-0d78-4fdd-aebe-c2c28759825b") || flowBox.BoxKey.Equals("fallback")) continue;
-            //    if (flowBox.BoxValue.ContentActions.FirstOrDefault(a => a.Input != null).Input.Bypass) continue;
+            foreach (BoxProxy proxy in flow.Proxy)
+            {
+                if (proxy.Key.Equals("59413693-0d78-4fdd-aebe-c2c28759825b") || proxy.Key.Equals("fallback")) continue;
+                if (proxy.Content.ContentActions.FirstOrDefault(a => a.Input != null).Input.Bypass) continue;
 
-            //    var outputs = flowBox.BoxValue.ConditionOutputs;
-            //    if (outputs.Count() == 0) continue;
-            //    var extraConditionOutput = new ConditionOutput
-            //    {
-            //        ConnId = null,
-            //        StateId = flowBox.BoxKey,
-            //        Conditions = new List<Condition>()
-            //    };
-            //    var extraCondition = new Condition
-            //    {
-            //        Comparison = "equals",
-            //        Source = "context",
-            //        Values = new List<string>(),
-            //        Variable = "redirect"
-            //    };
-            //    extraCondition.Values.Add(flowBox.BoxValue.Title);
+                var outputs = proxy.Content.ConditionOutputs;
+                if (outputs.Count() == 0) continue;
+                var extraConditionOutput = new ConditionOutput
+                {
+                    ConnId = null,
+                    StateId = proxy.Key,
+                    Conditions = new List<Condition>()
+                };
+                var extraCondition = new Condition
+                {
+                    Comparison = "equals",
+                    Source = "context",
+                    Values = new List<string>(),
+                    Variable = "redirect"
+                };
+                extraCondition.Values.Add(proxy.Content.Title);
 
-            //    extraConditionOutput.Conditions.Add(extraCondition);
+                extraConditionOutput.Conditions.Add(extraCondition);
 
-            //    flow.Boxes.FirstOrDefault(b => b.BoxKey.Equals("59413693-0d78-4fdd-aebe-c2c28759825b")).BoxValue.ConditionOutputs.Add(extraConditionOutput);
-            //}
+                flow.Proxy.FirstOrDefault(b => b.Key.Equals("59413693-0d78-4fdd-aebe-c2c28759825b")).Content.ConditionOutputs.Add(extraConditionOutput);
+            }
+            flow.ParseProxyIntoFlow();
 
-            //foreach (var box in builderFlowJson)
-            //{
-            //    if (box.Key.Equals("59413693-0d78-4fdd-aebe-c2c28759825b") || box.Key.Equals("fallback")) continue;
-
-            //    //ToObject<JProperty>().Name.Equals("input")
-            //    if (bool.Parse(box.Value["$contentActions"].LastOrDefault().FirstOrDefault().FirstOrDefault()["bypass"].ToString()))
-            //    {
-            //        continue;
-            //    }
-
-            //    var outputs = box.Value["$conditionOutputs"];
-            //    if (outputs.Count() == 0) continue;
-
-            //    var extra = builderFlowJson["59413693-0d78-4fdd-aebe-c2c28759825b"]["$conditionOutputs"].FirstOrDefault();
-            //    extra["$connId"] = null;
-            //    extra["$$hashKey"] = null;
-
-
-            //    extra["stateId"] = box.Key;
-
-            //    var obj = JsonConvert.DeserializeObject<Conditions>(extra.ToString());
-            //    obj.ConditionsConditions[0].Values.RemoveAll((p) => true);
-            //    obj.ConditionsConditions[0].Values.Add(box.Value["$title"].ToString());
-            //    obj.ConditionsConditions[0].HashKey = null;
-            //    extra["conditions"] = (JArray.Parse(obj.ConditionsConditions.ToArray().ToJson()));
-
-            //    builderFlowJson["59413693-0d78-4fdd-aebe-c2c28759825b"]["$conditionOutputs"].FirstOrDefault().AddAfterSelf(extra);
-            //}
             var serialized = string.Empty;
             foreach (var box in flow.Boxes)
             {

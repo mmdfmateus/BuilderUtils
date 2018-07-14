@@ -17,6 +17,18 @@ namespace BuilderUtils.Models
         }
         public List<Box> Boxes { get; set; }
         public List<BoxProxy> Proxy { get; set; }
+
+        public BlipBuilderFlow ParseProxyIntoFlow()
+        {
+            if (Proxy == null || Proxy.Count == 0) throw new Exception("Proxy list empty or null");
+            Boxes = new List<Box>();
+            foreach (var item in Proxy)
+            {
+                var box = new Box(item);
+                Boxes.Add(box);
+            }
+            return this;
+        }
     }
 
     public class BoxProxy
