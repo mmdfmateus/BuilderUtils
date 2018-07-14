@@ -1,0 +1,1747 @@
+{
+    "onboarding": {
+        "$contentActions": [
+            {
+                "input": {
+                    "bypass": false,
+                    "$cardContent": {
+                        "document": {
+                            "id": "181f9caf-60b2-4b24-9de3-9c60146aab9c",
+                            "type": "text/plain",
+                            "content": "User input"
+                        },
+                        "editable": false,
+                        "deletable": false,
+                        "position": "right"
+                    },
+                    "$invalid": false
+                },
+                "$invalid": false
+            }
+        ],
+        "$conditionOutputs": [
+            {
+                "stateId": "4914df0f-5a90-4a88-9ca2-206da560bee0",
+                "$connId": "con_57",
+                "conditions": [
+                    {
+                        "source": "input",
+                        "comparison": "exists",
+                        "values": []
+                    }
+                ]
+            }
+        ],
+        "$enteringCustomActions": [],
+        "$leavingCustomActions": [],
+        "$defaultOutput": {
+            "stateId": "fallback",
+            "$invalid": false
+        },
+        "id": "onboarding",
+        "root": true,
+        "$position": {
+            "top": "261px",
+            "left": "212px"
+        },
+        "$title": "Start",
+        "$invalidContentActions": false,
+        "$invalidOutputs": false,
+        "$invalidCustomActions": false,
+        "$invalid": false
+    },
+    "fallback": {
+        "$contentActions": [
+            {
+                "action": {
+                    "type": "SendMessage",
+                    "settings": {
+                        "type": "text/plain",
+                        "content": "Pong!"
+                    },
+                    "$cardContent": {
+                        "document": {
+                            "type": "text/plain",
+                            "content": "Pong!"
+                        },
+                        "editable": true,
+                        "deletable": true,
+                        "position": "left"
+                    }
+                },
+                "$invalid": false
+            },
+            {
+                "input": {
+                    "bypass": true,
+                    "$cardContent": {
+                        "document": {
+                            "id": "e7f80195-d671-4e7d-a99e-7446f56d3534",
+                            "type": "text/plain",
+                            "content": "Entrada do usuário"
+                        },
+                        "editable": false,
+                        "deletable": true,
+                        "position": "right"
+                    },
+                    "$invalid": false
+                },
+                "$invalid": false
+            }
+        ],
+        "$conditionOutputs": [],
+        "$enteringCustomActions": [],
+        "$leavingCustomActions": [],
+        "$defaultOutput": {
+            "stateId": "onboarding",
+            "$invalid": false
+        },
+        "id": "fallback",
+        "$position": {
+            "top": "73px",
+            "left": "916px"
+        },
+        "$title": "Exceptions",
+        "$invalidContentActions": false,
+        "$invalidOutputs": false,
+        "$invalidCustomActions": false,
+        "$invalid": false
+    },
+    "4914df0f-5a90-4a88-9ca2-206da560bee0": {
+        "$contentActions": [
+            {
+                "action": {
+                    "type": "SendMessage",
+                    "settings": {
+                        "id": "8f6bd06c-307c-4340-b529-08b1e023bc12",
+                        "type": "application/vnd.lime.chatstate+json",
+                        "content": {
+                            "state": "composing",
+                            "interval": 1000
+                        }
+                    },
+                    "$cardContent": {
+                        "document": {
+                            "id": "8f6bd06c-307c-4340-b529-08b1e023bc12",
+                            "type": "application/vnd.lime.chatstate+json",
+                            "content": {
+                                "state": "composing",
+                                "interval": 1000
+                            }
+                        },
+                        "editable": true,
+                        "deletable": true,
+                        "position": "left"
+                    }
+                },
+                "$invalid": false,
+                "$$hashKey": "object:1273"
+            },
+            {
+                "action": {
+                    "type": "SendMessage",
+                    "settings": {
+                        "id": "53c56947-01b5-4842-93bd-82ee30d4df54",
+                        "type": "text/plain",
+                        "content": "Some text"
+                    },
+                    "$cardContent": {
+                        "document": {
+                            "id": "53c56947-01b5-4842-93bd-82ee30d4df54",
+                            "type": "text/plain",
+                            "content": "Some text"
+                        },
+                        "editable": true,
+                        "deletable": true,
+                        "position": "left"
+                    }
+                },
+                "$invalid": false,
+                "$$hashKey": "object:1274"
+            },
+            {
+                "input": {
+                    "bypass": true,
+                    "$cardContent": {
+                        "document": {
+                            "id": "aa35322d-ee0c-481a-b223-c71d1b6e9c1a",
+                            "type": "text/plain",
+                            "content": "User input"
+                        },
+                        "editable": false,
+                        "deletable": true,
+                        "position": "right"
+                    },
+                    "$invalid": false
+                },
+                "$invalid": false,
+                "$$hashKey": "object:1078"
+            }
+        ],
+        "$conditionOutputs": [
+            {
+                "stateId": "6df3161d-2015-4066-99b4-5ea74cc5e55f",
+                "$connId": "con_68",
+                "conditions": [
+                    {
+                        "source": "input",
+                        "comparison": "exists",
+                        "values": [],
+                        "$$hashKey": "object:1672"
+                    }
+                ],
+                "$$hashKey": "object:1664",
+                "$invalid": false
+            }
+        ],
+        "$enteringCustomActions": [],
+        "$leavingCustomActions": [],
+        "$defaultOutput": {
+            "stateId": "fallback",
+            "$invalid": false
+        },
+        "id": "4914df0f-5a90-4a88-9ca2-206da560bee0",
+        "root": false,
+        "$title": "Text",
+        "$position": {
+            "top": "261px",
+            "left": "470px"
+        },
+        "$invalidContentActions": false,
+        "$invalidOutputs": false,
+        "$invalidCustomActions": false,
+        "$invalid": false,
+        "$inputSuggestions": []
+    },
+    "6df3161d-2015-4066-99b4-5ea74cc5e55f": {
+        "$contentActions": [
+            {
+                "action": {
+                    "type": "SendMessage",
+                    "settings": {
+                        "id": "906922ab-0e61-433b-aaa8-af43c7a5bb3d",
+                        "type": "application/vnd.lime.chatstate+json",
+                        "content": {
+                            "state": "composing",
+                            "interval": 1000
+                        }
+                    },
+                    "$cardContent": {
+                        "document": {
+                            "id": "906922ab-0e61-433b-aaa8-af43c7a5bb3d",
+                            "type": "application/vnd.lime.chatstate+json",
+                            "content": {
+                                "state": "composing",
+                                "interval": 1000
+                            }
+                        },
+                        "editable": true,
+                        "deletable": true,
+                        "position": "left"
+                    }
+                },
+                "$invalid": false,
+                "$$hashKey": "object:1878"
+            },
+            {
+                "action": {
+                    "type": "SendMessage",
+                    "settings": {
+                        "id": "54b3f61c-eb80-4774-bb7f-b975dc38e9a7",
+                        "type": "application/vnd.lime.collection+json",
+                        "content": {
+                            "itemType": "application/vnd.lime.document-select+json",
+                            "items": [
+                                {
+                                    "header": {
+                                        "type": "application/vnd.lime.media-link+json",
+                                        "value": {
+                                            "title": "First title",
+                                            "text": "First subtitle",
+                                            "type": "image/png",
+                                            "uri": "https://s3-sa-east-1.amazonaws.com/msging.net/Services/Images/2e3ff2b4-a8c6-4188-bc0c-0f23531739b2"
+                                        }
+                                    },
+                                    "options": [
+                                        {
+                                            "label": {
+                                                "type": "text/plain",
+                                                "value": "First option"
+                                            }
+                                        },
+                                        {
+                                            "label": {
+                                                "type": "text/plain",
+                                                "value": "Second option"
+                                            }
+                                        }
+                                    ]
+                                },
+                                {
+                                    "header": {
+                                        "type": "application/vnd.lime.media-link+json",
+                                        "value": {
+                                            "title": "Second title",
+                                            "text": "Second subtitle",
+                                            "type": "image/png",
+                                            "uri": "https://s3-sa-east-1.amazonaws.com/msging.net/Services/Images/2e3ff2b4-a8c6-4188-bc0c-0f23531739b2"
+                                        }
+                                    },
+                                    "options": [
+                                        {
+                                            "label": {
+                                                "type": "text/plain",
+                                                "value": "First option"
+                                            }
+                                        },
+                                        {
+                                            "label": {
+                                                "type": "application/vnd.lime.web-link+json",
+                                                "value": {
+                                                    "title": "Weblink",
+                                                    "text": "Weblink",
+                                                    "uri": "https://blip.ai"
+                                                }
+                                            }
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    },
+                    "$cardContent": {
+                        "document": {
+                            "id": "54b3f61c-eb80-4774-bb7f-b975dc38e9a7",
+                            "type": "application/vnd.lime.collection+json",
+                            "content": {
+                                "itemType": "application/vnd.lime.document-select+json",
+                                "items": [
+                                    {
+                                        "header": {
+                                            "type": "application/vnd.lime.media-link+json",
+                                            "value": {
+                                                "title": "First title",
+                                                "text": "First subtitle",
+                                                "type": "image/png",
+                                                "uri": "https://s3-sa-east-1.amazonaws.com/msging.net/Services/Images/2e3ff2b4-a8c6-4188-bc0c-0f23531739b2"
+                                            }
+                                        },
+                                        "options": [
+                                            {
+                                                "label": {
+                                                    "type": "text/plain",
+                                                    "value": "First option"
+                                                }
+                                            },
+                                            {
+                                                "label": {
+                                                    "type": "text/plain",
+                                                    "value": "Second option"
+                                                }
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "header": {
+                                            "type": "application/vnd.lime.media-link+json",
+                                            "value": {
+                                                "title": "Second title",
+                                                "text": "Second subtitle",
+                                                "type": "image/png",
+                                                "uri": "https://s3-sa-east-1.amazonaws.com/msging.net/Services/Images/2e3ff2b4-a8c6-4188-bc0c-0f23531739b2"
+                                            }
+                                        },
+                                        "options": [
+                                            {
+                                                "label": {
+                                                    "type": "text/plain",
+                                                    "value": "First option"
+                                                }
+                                            },
+                                            {
+                                                "label": {
+                                                    "type": "application/vnd.lime.web-link+json",
+                                                    "value": {
+                                                        "title": "Weblink",
+                                                        "text": "Weblink",
+                                                        "uri": "https://blip.ai"
+                                                    }
+                                                }
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        },
+                        "editable": true,
+                        "deletable": true,
+                        "position": "left"
+                    }
+                },
+                "$invalid": false,
+                "$$hashKey": "object:1879"
+            },
+            {
+                "input": {
+                    "bypass": true,
+                    "$cardContent": {
+                        "document": {
+                            "id": "6619f6d8-778f-44fa-8690-578d6c3d4c2f",
+                            "type": "text/plain",
+                            "content": "User input"
+                        },
+                        "editable": false,
+                        "deletable": true,
+                        "position": "right"
+                    },
+                    "$invalid": false
+                },
+                "$$hashKey": "object:1370",
+                "$invalid": false
+            }
+        ],
+        "$conditionOutputs": [
+            {
+                "stateId": "8e085163-bf8c-416c-a4a5-25d5555266da",
+                "$connId": "con_79",
+                "conditions": [
+                    {
+                        "source": "input",
+                        "comparison": "exists",
+                        "values": []
+                    }
+                ]
+            }
+        ],
+        "$enteringCustomActions": [],
+        "$leavingCustomActions": [],
+        "$inputSuggestions": [
+            "First option",
+            "Second option"
+        ],
+        "$defaultOutput": {
+            "stateId": "fallback",
+            "$invalid": false
+        },
+        "id": "6df3161d-2015-4066-99b4-5ea74cc5e55f",
+        "root": false,
+        "$title": "Carousel",
+        "$position": {
+            "top": "261px",
+            "left": "699px"
+        },
+        "$invalidContentActions": false,
+        "$invalidOutputs": false,
+        "$invalidCustomActions": false,
+        "$invalid": false
+    },
+    "8e085163-bf8c-416c-a4a5-25d5555266da": {
+        "$contentActions": [
+            {
+                "action": {
+                    "type": "SendMessage",
+                    "settings": {
+                        "id": "ce4d67b1-f9b0-4af5-9db0-d2835be36dc9",
+                        "type": "application/vnd.lime.chatstate+json",
+                        "content": {
+                            "state": "composing",
+                            "interval": 1000
+                        }
+                    },
+                    "$cardContent": {
+                        "document": {
+                            "id": "ce4d67b1-f9b0-4af5-9db0-d2835be36dc9",
+                            "type": "application/vnd.lime.chatstate+json",
+                            "content": {
+                                "state": "composing",
+                                "interval": 1000
+                            }
+                        },
+                        "editable": true,
+                        "deletable": true,
+                        "position": "left"
+                    }
+                },
+                "$invalid": false,
+                "$$hashKey": "object:2173"
+            },
+            {
+                "action": {
+                    "type": "SendMessage",
+                    "settings": {
+                        "id": "71d3bc11-2715-446e-bb59-95a59de5c4fe",
+                        "type": "application/vnd.lime.select+json",
+                        "content": {
+                            "text": "Select text",
+                            "scope": "immediate",
+                            "options": [
+                                {
+                                    "text": "First option"
+                                },
+                                {
+                                    "text": "Second option"
+                                }
+                            ]
+                        }
+                    },
+                    "$cardContent": {
+                        "document": {
+                            "id": "71d3bc11-2715-446e-bb59-95a59de5c4fe",
+                            "type": "application/vnd.lime.select+json",
+                            "content": {
+                                "text": "Select text",
+                                "scope": "immediate",
+                                "options": [
+                                    {
+                                        "text": "First option"
+                                    },
+                                    {
+                                        "text": "Second option"
+                                    }
+                                ]
+                            }
+                        },
+                        "editable": true,
+                        "deletable": true,
+                        "position": "left"
+                    }
+                },
+                "$invalid": false,
+                "$$hashKey": "object:2174"
+            },
+            {
+                "input": {
+                    "bypass": false,
+                    "$cardContent": {
+                        "document": {
+                            "id": "cc98f16a-9c4b-45d3-a8ca-8528f82d5bd4",
+                            "type": "text/plain",
+                            "textContent": "User input",
+                            "content": "User input"
+                        },
+                        "editable": false,
+                        "deletable": true,
+                        "position": "right"
+                    },
+                    "$invalid": false
+                },
+                "$$hashKey": "object:1973",
+                "$invalid": false
+            }
+        ],
+        "$conditionOutputs": [
+            {
+                "stateId": "27ff0305-bd1b-4566-a0ff-988b6dd1d370",
+                "$connId": "con_90",
+                "conditions": [
+                    {
+                        "source": "input",
+                        "comparison": "exists",
+                        "values": []
+                    }
+                ]
+            }
+        ],
+        "$enteringCustomActions": [],
+        "$leavingCustomActions": [],
+        "$inputSuggestions": [],
+        "$defaultOutput": {
+            "stateId": "fallback",
+            "$invalid": false
+        },
+        "id": "8e085163-bf8c-416c-a4a5-25d5555266da",
+        "root": false,
+        "$title": "Quick Reply",
+        "$position": {
+            "top": "417px",
+            "left": "696px"
+        },
+        "$invalidContentActions": false,
+        "$invalidOutputs": false,
+        "$invalidCustomActions": false,
+        "$invalid": false
+    },
+    "27ff0305-bd1b-4566-a0ff-988b6dd1d370": {
+        "$contentActions": [
+            {
+                "action": {
+                    "type": "SendMessage",
+                    "settings": {
+                        "id": "526a3ecf-dbdc-469d-98be-d631aeb60917",
+                        "type": "application/vnd.lime.chatstate+json",
+                        "content": {
+                            "state": "composing",
+                            "interval": 1000
+                        }
+                    },
+                    "$cardContent": {
+                        "document": {
+                            "id": "526a3ecf-dbdc-469d-98be-d631aeb60917",
+                            "type": "application/vnd.lime.chatstate+json",
+                            "content": {
+                                "state": "composing",
+                                "interval": 1000
+                            }
+                        },
+                        "editable": true,
+                        "deletable": true,
+                        "position": "left"
+                    }
+                },
+                "$invalid": false,
+                "$$hashKey": "object:2341"
+            },
+            {
+                "action": {
+                    "type": "SendMessage",
+                    "settings": {
+                        "id": "48fb3aec-b7b8-46e0-a032-a1b99339b940",
+                        "type": "application/vnd.lime.select+json",
+                        "content": {
+                            "text": "Select text",
+                            "options": [
+                                {
+                                    "text": "First option"
+                                },
+                                {
+                                    "text": "Second option"
+                                },
+                                {
+                                    "text": "Third option"
+                                }
+                            ]
+                        }
+                    },
+                    "$cardContent": {
+                        "document": {
+                            "id": "48fb3aec-b7b8-46e0-a032-a1b99339b940",
+                            "type": "application/vnd.lime.select+json",
+                            "content": {
+                                "text": "Select text",
+                                "options": [
+                                    {
+                                        "text": "First option"
+                                    },
+                                    {
+                                        "text": "Second option"
+                                    },
+                                    {
+                                        "text": "Third option"
+                                    }
+                                ]
+                            }
+                        },
+                        "editable": true,
+                        "deletable": true,
+                        "position": "left"
+                    }
+                },
+                "$invalid": false,
+                "$$hashKey": "object:2342"
+            },
+            {
+                "input": {
+                    "bypass": false,
+                    "$cardContent": {
+                        "document": {
+                            "id": "b835e1bd-2a73-4520-a96a-09b82fb5b539",
+                            "type": "text/plain",
+                            "textContent": "User input",
+                            "content": "User input"
+                        },
+                        "editable": false,
+                        "deletable": true,
+                        "position": "right"
+                    },
+                    "$invalid": false
+                },
+                "$$hashKey": "object:2268",
+                "$invalid": false
+            }
+        ],
+        "$conditionOutputs": [
+            {
+                "stateId": "4d376ed4-d4e3-4f02-b8f4-6745608868eb",
+                "$connId": "con_101",
+                "conditions": [
+                    {
+                        "source": "input",
+                        "comparison": "exists",
+                        "values": []
+                    }
+                ]
+            }
+        ],
+        "$enteringCustomActions": [],
+        "$leavingCustomActions": [],
+        "$inputSuggestions": [
+            "First option",
+            "Second option",
+            "Third option"
+        ],
+        "$defaultOutput": {
+            "stateId": "fallback",
+            "$invalid": false
+        },
+        "id": "27ff0305-bd1b-4566-a0ff-988b6dd1d370",
+        "root": false,
+        "$title": "Menu",
+        "$position": {
+            "top": "430px",
+            "left": "476px"
+        },
+        "$invalidContentActions": false,
+        "$invalidOutputs": false,
+        "$invalidCustomActions": false,
+        "$invalid": false
+    },
+    "4d376ed4-d4e3-4f02-b8f4-6745608868eb": {
+        "$contentActions": [
+            {
+                "action": {
+                    "type": "SendMessage",
+                    "settings": {
+                        "id": "b0f49685-42f8-41df-95f5-76e5703cf7ce",
+                        "type": "application/vnd.lime.chatstate+json",
+                        "content": {
+                            "state": "composing",
+                            "interval": 1000
+                        }
+                    },
+                    "$cardContent": {
+                        "document": {
+                            "id": "b0f49685-42f8-41df-95f5-76e5703cf7ce",
+                            "type": "application/vnd.lime.chatstate+json",
+                            "content": {
+                                "state": "composing",
+                                "interval": 1000
+                            }
+                        },
+                        "editable": true,
+                        "deletable": true,
+                        "position": "left"
+                    }
+                },
+                "$invalid": false,
+                "$$hashKey": "object:2511"
+            },
+            {
+                "action": {
+                    "type": "SendMessage",
+                    "settings": {
+                        "id": "73cf0df4-d065-47e7-b56b-0157a53dd0a6",
+                        "type": "application/vnd.lime.media-link+json",
+                        "content": {
+                            "title": "Media link title",
+                            "text": "Media link subtitle",
+                            "type": "image/png",
+                            "uri": "https://s3-sa-east-1.amazonaws.com/msging.net/Services/Images/2e3ff2b4-a8c6-4188-bc0c-0f23531739b2",
+                            "aspectRatio": "1:1"
+                        }
+                    },
+                    "$cardContent": {
+                        "document": {
+                            "id": "73cf0df4-d065-47e7-b56b-0157a53dd0a6",
+                            "type": "application/vnd.lime.media-link+json",
+                            "content": {
+                                "title": "Media link title",
+                                "text": "Media link subtitle",
+                                "type": "image/png",
+                                "uri": "https://s3-sa-east-1.amazonaws.com/msging.net/Services/Images/2e3ff2b4-a8c6-4188-bc0c-0f23531739b2",
+                                "aspectRatio": "1:1"
+                            }
+                        },
+                        "editable": true,
+                        "deletable": true,
+                        "position": "left"
+                    }
+                },
+                "$invalid": false,
+                "$$hashKey": "object:2512"
+            },
+            {
+                "input": {
+                    "bypass": false,
+                    "$cardContent": {
+                        "document": {
+                            "id": "db480748-3b0c-45d9-8ce4-b7b8c08d955f",
+                            "type": "text/plain",
+                            "textContent": "User input",
+                            "content": "User input"
+                        },
+                        "editable": false,
+                        "deletable": true,
+                        "position": "right"
+                    },
+                    "$invalid": false
+                },
+                "$$hashKey": "object:2436",
+                "$invalid": false
+            }
+        ],
+        "$conditionOutputs": [],
+        "$enteringCustomActions": [],
+        "$leavingCustomActions": [],
+        "$inputSuggestions": [],
+        "$defaultOutput": {
+            "stateId": "fallback",
+            "$invalid": false
+        },
+        "id": "4d376ed4-d4e3-4f02-b8f4-6745608868eb",
+        "root": false,
+        "$title": "Image",
+        "$position": {
+            "top": "593px",
+            "left": "693px"
+        },
+        "$invalidContentActions": false,
+        "$invalidOutputs": false,
+        "$invalidCustomActions": false,
+        "$invalid": false
+    },
+    "84ad31ca-a13d-4360-aad4-0332c4621023": {
+        "$contentActions": [
+            {
+                "action": {
+                    "type": "SendMessage",
+                    "settings": {
+                        "id": "906c271c-f7b8-4633-b1ab-19c6d228ad3d",
+                        "type": "application/vnd.lime.chatstate+json",
+                        "content": {
+                            "state": "composing",
+                            "interval": 1000
+                        }
+                    },
+                    "$cardContent": {
+                        "document": {
+                            "id": "906c271c-f7b8-4633-b1ab-19c6d228ad3d",
+                            "type": "application/vnd.lime.chatstate+json",
+                            "content": {
+                                "state": "composing",
+                                "interval": 1000
+                            }
+                        },
+                        "editable": true,
+                        "deletable": true,
+                        "position": "left"
+                    }
+                },
+                "$invalid": false,
+                "$$hashKey": "object:2683"
+            },
+            {
+                "action": {
+                    "type": "SendMessage",
+                    "settings": {
+                        "id": "e0c61226-572b-4c19-b567-41a231a2cdb8",
+                        "type": "application/vnd.lime.media-link+json",
+                        "content": {
+                            "type": "audio/mp3",
+                            "uri": "http://blaamandagjazzband.dk/jazz/mp3/basin_street_blues.mp3"
+                        }
+                    },
+                    "$cardContent": {
+                        "document": {
+                            "id": "e0c61226-572b-4c19-b567-41a231a2cdb8",
+                            "type": "application/vnd.lime.media-link+json",
+                            "content": {
+                                "type": "audio/mp3",
+                                "uri": "http://blaamandagjazzband.dk/jazz/mp3/basin_street_blues.mp3"
+                            }
+                        },
+                        "editable": true,
+                        "deletable": true,
+                        "position": "left"
+                    }
+                },
+                "$invalid": false,
+                "$$hashKey": "object:2684"
+            },
+            {
+                "input": {
+                    "bypass": false,
+                    "$cardContent": {
+                        "document": {
+                            "id": "b9cc6bc3-11d5-4dd0-832d-622bede5283c",
+                            "type": "text/plain",
+                            "textContent": "User input",
+                            "content": "User input"
+                        },
+                        "editable": false,
+                        "deletable": true,
+                        "position": "right"
+                    },
+                    "$invalid": false
+                },
+                "$$hashKey": "object:2606",
+                "$invalid": false
+            }
+        ],
+        "$conditionOutputs": [],
+        "$enteringCustomActions": [],
+        "$leavingCustomActions": [],
+        "$inputSuggestions": [],
+        "$defaultOutput": {
+            "stateId": "fallback",
+            "$invalid": false
+        },
+        "id": "84ad31ca-a13d-4360-aad4-0332c4621023",
+        "root": false,
+        "$title": "Audio",
+        "$position": {
+            "top": "502px",
+            "left": "927px"
+        },
+        "$invalidContentActions": false,
+        "$invalidOutputs": false,
+        "$invalidCustomActions": false,
+        "$invalid": false
+    },
+    "92615304-619c-49bd-be76-8054fe2ac1c6": {
+        "$contentActions": [
+            {
+                "action": {
+                    "type": "SendMessage",
+                    "settings": {
+                        "id": "b9a64642-f17e-4e2a-9945-aec3f22b5131",
+                        "type": "application/vnd.lime.chatstate+json",
+                        "content": {
+                            "state": "composing",
+                            "interval": 1000
+                        }
+                    },
+                    "$cardContent": {
+                        "document": {
+                            "id": "b9a64642-f17e-4e2a-9945-aec3f22b5131",
+                            "type": "application/vnd.lime.chatstate+json",
+                            "content": {
+                                "state": "composing",
+                                "interval": 1000
+                            }
+                        },
+                        "editable": true,
+                        "deletable": true,
+                        "position": "left"
+                    }
+                },
+                "$invalid": false,
+                "$$hashKey": "object:2857"
+            },
+            {
+                "action": {
+                    "type": "SendMessage",
+                    "settings": {
+                        "id": "2414b538-473c-4984-85ba-c18988dab62a",
+                        "type": "application/vnd.lime.media-link+json",
+                        "content": {
+                            "type": "video/mp4",
+                            "uri": "http://techslides.com/demos/sample-videos/small.mp4"
+                        }
+                    },
+                    "$cardContent": {
+                        "document": {
+                            "id": "2414b538-473c-4984-85ba-c18988dab62a",
+                            "type": "application/vnd.lime.media-link+json",
+                            "content": {
+                                "type": "video/mp4",
+                                "uri": "http://techslides.com/demos/sample-videos/small.mp4"
+                            }
+                        },
+                        "editable": true,
+                        "deletable": true,
+                        "position": "left"
+                    }
+                },
+                "$invalid": false,
+                "$$hashKey": "object:2858"
+            },
+            {
+                "input": {
+                    "bypass": false,
+                    "$cardContent": {
+                        "document": {
+                            "id": "d04fee52-868d-4ae2-84bd-d02375e1b48d",
+                            "type": "text/plain",
+                            "textContent": "User input",
+                            "content": "User input"
+                        },
+                        "editable": false,
+                        "deletable": true,
+                        "position": "right"
+                    },
+                    "$invalid": false
+                },
+                "$$hashKey": "object:2778",
+                "$invalid": false
+            }
+        ],
+        "$conditionOutputs": [],
+        "$enteringCustomActions": [],
+        "$leavingCustomActions": [],
+        "$inputSuggestions": [],
+        "$defaultOutput": {
+            "stateId": "fallback",
+            "$invalid": false
+        },
+        "id": "92615304-619c-49bd-be76-8054fe2ac1c6",
+        "root": false,
+        "$title": "Video",
+        "$position": {
+            "top": "651px",
+            "left": "967px"
+        },
+        "$invalidContentActions": false,
+        "$invalidOutputs": false,
+        "$invalidCustomActions": false,
+        "$invalid": false
+    },
+    "19a65de0-acc2-435e-a7fa-ff2cd7742326": {
+        "$contentActions": [
+            {
+                "action": {
+                    "type": "SendMessage",
+                    "settings": {
+                        "id": "3fb929c3-a1eb-41b0-9643-307b1691ea1b",
+                        "type": "application/vnd.lime.chatstate+json",
+                        "content": {
+                            "state": "composing",
+                            "interval": 1000
+                        }
+                    },
+                    "$cardContent": {
+                        "document": {
+                            "id": "3fb929c3-a1eb-41b0-9643-307b1691ea1b",
+                            "type": "application/vnd.lime.chatstate+json",
+                            "content": {
+                                "state": "composing",
+                                "interval": 1000
+                            }
+                        },
+                        "editable": true,
+                        "deletable": true,
+                        "position": "left"
+                    }
+                },
+                "$invalid": false,
+                "$$hashKey": "object:3033"
+            },
+            {
+                "action": {
+                    "type": "SendMessage",
+                    "settings": {
+                        "id": "8c9ddbf6-9c12-4083-b923-9d1db6e4fe0d",
+                        "type": "application/vnd.lime.media-link+json",
+                        "content": {
+                            "title": "pdf_open_parameters.pdf",
+                            "type": "application/pdf",
+                            "uri": "https://gradcollege.okstate.edu/sites/default/files/PDF_linking.pdf"
+                        }
+                    },
+                    "$cardContent": {
+                        "document": {
+                            "id": "8c9ddbf6-9c12-4083-b923-9d1db6e4fe0d",
+                            "type": "application/vnd.lime.media-link+json",
+                            "content": {
+                                "title": "pdf_open_parameters.pdf",
+                                "type": "application/pdf",
+                                "uri": "https://gradcollege.okstate.edu/sites/default/files/PDF_linking.pdf"
+                            }
+                        },
+                        "editable": true,
+                        "deletable": true,
+                        "position": "left"
+                    }
+                },
+                "$invalid": false,
+                "$$hashKey": "object:3034"
+            },
+            {
+                "input": {
+                    "bypass": false,
+                    "$cardContent": {
+                        "document": {
+                            "id": "9aa357f0-e730-4cc9-bc79-c469804ec5a8",
+                            "type": "text/plain",
+                            "textContent": "User input",
+                            "content": "User input"
+                        },
+                        "editable": false,
+                        "deletable": true,
+                        "position": "right"
+                    },
+                    "$invalid": false
+                },
+                "$$hashKey": "object:2952",
+                "$invalid": false
+            }
+        ],
+        "$conditionOutputs": [],
+        "$enteringCustomActions": [],
+        "$leavingCustomActions": [],
+        "$inputSuggestions": [],
+        "$defaultOutput": {
+            "stateId": "fallback",
+            "$invalid": false
+        },
+        "id": "19a65de0-acc2-435e-a7fa-ff2cd7742326",
+        "root": false,
+        "$title": "Document",
+        "$position": {
+            "top": "370px",
+            "left": "1097px"
+        },
+        "$invalidContentActions": false,
+        "$invalidOutputs": false,
+        "$invalidCustomActions": false,
+        "$invalid": false
+    },
+    "89b297a6-8aaf-4e9b-bfec-22c66d294809": {
+        "$contentActions": [
+            {
+                "input": {
+                    "bypass": false,
+                    "$cardContent": {
+                        "document": {
+                            "id": "10e1b77d-0af8-41e1-8c27-4d8a2ef5ddf5",
+                            "type": "text/plain",
+                            "textContent": "User input",
+                            "content": "User input"
+                        },
+                        "editable": false,
+                        "deletable": true,
+                        "position": "right"
+                    },
+                    "$invalid": false
+                },
+                "$$hashKey": "object:3128",
+                "$invalid": false
+            },
+            {
+                "action": {
+                    "type": "SendMessage",
+                    "settings": {
+                        "id": "9266c672-a9c1-4834-98c0-8c522d8a713a",
+                        "type": "application/vnd.lime.location+json",
+                        "content": {
+                            "latitude": -19.918899,
+                            "longitude": -43.959275,
+                            "altitude": 853,
+                            "text": "Take's office"
+                        }
+                    },
+                    "$cardContent": {
+                        "document": {
+                            "id": "9266c672-a9c1-4834-98c0-8c522d8a713a",
+                            "type": "application/vnd.lime.location+json",
+                            "content": {
+                                "latitude": -19.918899,
+                                "longitude": -43.959275,
+                                "altitude": 853,
+                                "text": "Take's office"
+                            }
+                        },
+                        "editable": true,
+                        "deletable": true,
+                        "position": "left"
+                    }
+                },
+                "$invalid": false,
+                "$$hashKey": "object:3211"
+            }
+        ],
+        "$conditionOutputs": [],
+        "$enteringCustomActions": [],
+        "$leavingCustomActions": [],
+        "$inputSuggestions": [],
+        "$defaultOutput": {
+            "stateId": "fallback",
+            "$invalid": false
+        },
+        "id": "89b297a6-8aaf-4e9b-bfec-22c66d294809",
+        "root": false,
+        "$title": "Location",
+        "$position": {
+            "top": "473px",
+            "left": "203px"
+        },
+        "$invalidContentActions": false,
+        "$invalidOutputs": false,
+        "$invalidCustomActions": false,
+        "$invalid": false
+    },
+    "1aa3cbf8-2a29-4d57-a4c2-f82963b88aa4": {
+        "$contentActions": [
+            {
+                "input": {
+                    "bypass": false,
+                    "$cardContent": {
+                        "document": {
+                            "id": "26cab65d-81c0-4804-9a60-94861f89e602",
+                            "type": "text/plain",
+                            "textContent": "User input",
+                            "content": "User input"
+                        },
+                        "editable": false,
+                        "deletable": true,
+                        "position": "right"
+                    },
+                    "$invalid": false
+                },
+                "$$hashKey": "object:3298",
+                "$invalid": false
+            },
+            {
+                "action": {
+                    "type": "SendMessage",
+                    "settings": {
+                        "id": "fcbf1848-c7ea-4b00-864f-8f009f7b81c7",
+                        "type": "application/vnd.lime.input+json",
+                        "content": {
+                            "label": {
+                                "type": "text/plain",
+                                "value": "Please share your location"
+                            },
+                            "validation": {
+                                "rule": "type",
+                                "type": "application/vnd.lime.location+json"
+                            }
+                        }
+                    },
+                    "$cardContent": {
+                        "document": {
+                            "id": "fcbf1848-c7ea-4b00-864f-8f009f7b81c7",
+                            "type": "application/vnd.lime.input+json",
+                            "content": {
+                                "label": {
+                                    "type": "text/plain",
+                                    "value": "Please share your location"
+                                },
+                                "validation": {
+                                    "rule": "type",
+                                    "type": "application/vnd.lime.location+json"
+                                }
+                            }
+                        },
+                        "editable": true,
+                        "deletable": true,
+                        "position": "left"
+                    }
+                },
+                "$invalid": false,
+                "$$hashKey": "object:3383"
+            }
+        ],
+        "$conditionOutputs": [],
+        "$enteringCustomActions": [],
+        "$leavingCustomActions": [],
+        "$inputSuggestions": [],
+        "$defaultOutput": {
+            "stateId": "fallback",
+            "$invalid": false
+        },
+        "id": "1aa3cbf8-2a29-4d57-a4c2-f82963b88aa4",
+        "root": false,
+        "$title": "Ask location",
+        "$position": {
+            "top": "234px",
+            "left": "1030px"
+        },
+        "$invalidContentActions": false,
+        "$invalidOutputs": false,
+        "$invalidCustomActions": false,
+        "$invalid": false
+    },
+    "e996d382-a4ac-4b2f-927f-7a7513e442f5": {
+        "$contentActions": [
+            {
+                "action": {
+                    "type": "SendMessage",
+                    "settings": {
+                        "id": "710748bb-d4b1-4c49-a787-e1660050f4ea",
+                        "type": "application/vnd.lime.chatstate+json",
+                        "content": {
+                            "state": "composing",
+                            "interval": 1000
+                        }
+                    },
+                    "$cardContent": {
+                        "document": {
+                            "id": "710748bb-d4b1-4c49-a787-e1660050f4ea",
+                            "type": "application/vnd.lime.chatstate+json",
+                            "content": {
+                                "state": "composing",
+                                "interval": 1000
+                            }
+                        },
+                        "editable": true,
+                        "deletable": true,
+                        "position": "left"
+                    }
+                },
+                "$invalid": false,
+                "$$hashKey": "object:3557"
+            },
+            {
+                "action": {
+                    "type": "SendMessage",
+                    "settings": {
+                        "id": "ddfbda47-3595-4e13-b5ac-dd4786525f74",
+                        "type": "application/vnd.lime.web-link+json",
+                        "content": {
+                            "uri": "http://limeprotocol.org/content-types.html#web-link",
+                            "target": "blank",
+                            "title": "Weblink title",
+                            "text": "Weblink subtitle"
+                        }
+                    },
+                    "$cardContent": {
+                        "document": {
+                            "id": "ddfbda47-3595-4e13-b5ac-dd4786525f74",
+                            "type": "application/vnd.lime.web-link+json",
+                            "content": {
+                                "uri": "http://limeprotocol.org/content-types.html#web-link",
+                                "target": "blank",
+                                "title": "Weblink title",
+                                "text": "Weblink subtitle"
+                            }
+                        },
+                        "editable": true,
+                        "deletable": true,
+                        "position": "left"
+                    }
+                },
+                "$invalid": false,
+                "$$hashKey": "object:3558"
+            },
+            {
+                "input": {
+                    "bypass": false,
+                    "$cardContent": {
+                        "document": {
+                            "id": "7ddacbec-2ab0-4168-a8db-2a42d16ca827",
+                            "type": "text/plain",
+                            "textContent": "User input",
+                            "content": "User input"
+                        },
+                        "editable": false,
+                        "deletable": true,
+                        "position": "right"
+                    },
+                    "$invalid": false
+                },
+                "$$hashKey": "object:3470",
+                "$invalid": false
+            }
+        ],
+        "$conditionOutputs": [],
+        "$enteringCustomActions": [],
+        "$leavingCustomActions": [],
+        "$inputSuggestions": [],
+        "$defaultOutput": {
+            "stateId": "fallback",
+            "$invalid": false
+        },
+        "id": "e996d382-a4ac-4b2f-927f-7a7513e442f5",
+        "root": false,
+        "$title": "Weblink",
+        "$position": {
+            "top": "625px",
+            "left": "271px"
+        },
+        "$invalidContentActions": false,
+        "$invalidOutputs": false,
+        "$invalidCustomActions": false,
+        "$invalid": false
+    },
+    "c7edbb93-ab85-464d-b511-7f3dc77d554c": {
+        "$contentActions": [
+            {
+                "action": {
+                    "type": "SendMessage",
+                    "settings": {
+                        "id": "2123138c-268e-4e98-a911-8a4c3c5ec4bb",
+                        "type": "application/vnd.lime.chatstate+json",
+                        "content": {
+                            "state": "composing",
+                            "interval": 1000
+                        }
+                    },
+                    "$cardContent": {
+                        "document": {
+                            "id": "2123138c-268e-4e98-a911-8a4c3c5ec4bb",
+                            "type": "application/vnd.lime.chatstate+json",
+                            "content": {
+                                "state": "composing",
+                                "interval": 1000
+                            }
+                        },
+                        "editable": true,
+                        "deletable": true,
+                        "position": "left"
+                    }
+                },
+                "$invalid": false,
+                "$$hashKey": "object:3768"
+            },
+            {
+                "action": {
+                    "type": "SendMessageFromHttp",
+                    "settings": {
+                        "headers": {
+                            "Key": "Value"
+                        },
+                        "$builderType": "select-immediate",
+                        "type": "application/vnd.lime.select+json",
+                        "uri": "https://www.google.com"
+                    }
+                },
+                "$invalid": false,
+                "$$hashKey": "object:3769"
+            },
+            {
+                "action": {
+                    "type": "SendMessage",
+                    "settings": {
+                        "id": "e4c2a865-f58f-43cb-b2b8-1239b4845ac1",
+                        "type": "application/vnd.lime.chatstate+json",
+                        "content": {
+                            "state": "composing",
+                            "interval": 1000
+                        }
+                    },
+                    "$cardContent": {
+                        "document": {
+                            "id": "e4c2a865-f58f-43cb-b2b8-1239b4845ac1",
+                            "type": "application/vnd.lime.chatstate+json",
+                            "content": {
+                                "state": "composing",
+                                "interval": 1000
+                            }
+                        },
+                        "editable": true,
+                        "deletable": true,
+                        "position": "left"
+                    }
+                },
+                "$invalid": false,
+                "$$hashKey": "object:4083"
+            },
+            {
+                "action": {
+                    "type": "SendMessageFromHttp",
+                    "settings": {
+                        "headers": {
+                            "Key": "Value"
+                        },
+                        "$builderType": "select-immediate",
+                        "type": "application/vnd.lime.select+json",
+                        "uri": "https://www.google.com"
+                    }
+                },
+                "$invalid": false,
+                "$$hashKey": "object:4084"
+            },
+            {
+                "action": {
+                    "type": "SendMessage",
+                    "settings": {
+                        "id": "261746c5-7edd-4e61-92b9-747731c15c5c",
+                        "type": "application/vnd.lime.chatstate+json",
+                        "content": {
+                            "state": "composing",
+                            "interval": 1000
+                        }
+                    },
+                    "$cardContent": {
+                        "document": {
+                            "id": "261746c5-7edd-4e61-92b9-747731c15c5c",
+                            "type": "application/vnd.lime.chatstate+json",
+                            "content": {
+                                "state": "composing",
+                                "interval": 1000
+                            }
+                        },
+                        "editable": true,
+                        "deletable": true,
+                        "position": "left"
+                    }
+                },
+                "$invalid": false,
+                "$$hashKey": "object:4151"
+            },
+            {
+                "action": {
+                    "type": "SendMessageFromHttp",
+                    "settings": {
+                        "headers": {
+                            "Key": "Value"
+                        },
+                        "$builderType": "select",
+                        "type": "application/vnd.lime.select+json",
+                        "uri": "https://www.google.com"
+                    }
+                },
+                "$invalid": false,
+                "$$hashKey": "object:4152"
+            },
+            {
+                "input": {
+                    "bypass": false,
+                    "$cardContent": {
+                        "document": {
+                            "id": "7a717e21-729f-4217-90d6-afe32bef4caa",
+                            "type": "text/plain",
+                            "textContent": "User input",
+                            "content": "User input"
+                        },
+                        "editable": false,
+                        "deletable": true,
+                        "position": "right"
+                    },
+                    "$invalid": false
+                },
+                "$$hashKey": "object:3652",
+                "$invalid": false
+            }
+        ],
+        "$conditionOutputs": [],
+        "$enteringCustomActions": [],
+        "$leavingCustomActions": [],
+        "$inputSuggestions": [],
+        "$defaultOutput": {
+            "stateId": "fallback",
+            "$invalid": false
+        },
+        "id": "c7edbb93-ab85-464d-b511-7f3dc77d554c",
+        "root": false,
+        "$title": "HttpContent",
+        "$position": {
+            "top": "123px",
+            "left": "587px"
+        },
+        "$invalidContentActions": false,
+        "$invalidOutputs": false,
+        "$invalidCustomActions": false,
+        "$invalid": false
+    },
+    "6cb49916-5530-4dee-afc7-b4a8ead35fb3": {
+        "$contentActions": [
+            {
+                "action": {
+                    "type": "SendMessage",
+                    "settings": {
+                        "id": "05fa90bd-195b-4221-8bcc-8ae2b6138b3c",
+                        "type": "application/vnd.lime.chatstate+json",
+                        "content": {
+                            "state": "composing",
+                            "interval": 1000
+                        }
+                    },
+                    "$cardContent": {
+                        "document": {
+                            "id": "05fa90bd-195b-4221-8bcc-8ae2b6138b3c",
+                            "type": "application/vnd.lime.chatstate+json",
+                            "content": {
+                                "state": "composing",
+                                "interval": 1000
+                            }
+                        },
+                        "editable": true,
+                        "deletable": true,
+                        "position": "left"
+                    }
+                },
+                "$invalid": false,
+                "$$hashKey": "object:4384"
+            },
+            {
+                "action": {
+                    "type": "SendRawMessage",
+                    "settings": {
+                        "metadata": {
+                            "Key": "Value"
+                        },
+                        "type": "text/plain",
+                        "rawContent": "{{variable}}"
+                    }
+                },
+                "$invalid": false,
+                "$$hashKey": "object:4385"
+            },
+            {
+                "input": {
+                    "bypass": false,
+                    "$cardContent": {
+                        "document": {
+                            "id": "5ef863e5-84fd-4ef4-9de2-30954afb4d0c",
+                            "type": "text/plain",
+                            "textContent": "User input",
+                            "content": "User input"
+                        },
+                        "editable": false,
+                        "deletable": true,
+                        "position": "right"
+                    },
+                    "$invalid": false
+                },
+                "$$hashKey": "object:4274",
+                "$invalid": false
+            }
+        ],
+        "$conditionOutputs": [],
+        "$enteringCustomActions": [],
+        "$leavingCustomActions": [],
+        "$inputSuggestions": [],
+        "$defaultOutput": {
+            "stateId": "fallback",
+            "$invalid": false
+        },
+        "id": "6cb49916-5530-4dee-afc7-b4a8ead35fb3",
+        "root": false,
+        "$title": "Dynamic Content",
+        "$position": {
+            "top": "71px",
+            "left": "393px"
+        },
+        "$invalidContentActions": false,
+        "$invalidOutputs": false,
+        "$invalidCustomActions": false,
+        "$invalid": false
+    },
+    "a4b80a31-6f42-4789-9470-32b8069a3c9d": {
+        "$contentActions": [
+            {
+                "input": {
+                    "bypass": false,
+                    "$cardContent": {
+                        "document": {
+                            "id": "c94f243c-a4fb-4709-b41d-4e80a82407fa",
+                            "type": "text/plain",
+                            "textContent": "User input",
+                            "content": "User input"
+                        },
+                        "editable": false,
+                        "deletable": true,
+                        "position": "right"
+                    },
+                    "$invalid": false
+                },
+                "$$hashKey": "object:4677",
+                "$invalid": false
+            }
+        ],
+        "$conditionOutputs": [
+            {
+                "stateId": "1aa3cbf8-2a29-4d57-a4c2-f82963b88aa4",
+                "$connId": "con_112",
+                "conditions": [
+                    {
+                        "source": "input",
+                        "comparison": "exists",
+                        "values": [],
+                        "$$hashKey": "object:5473"
+                    }
+                ],
+                "$invalid": false,
+                "$$hashKey": "object:5465"
+            }
+        ],
+        "$enteringCustomActions": [
+            {
+                "type": "ProcessHttp",
+                "$title": "HTTP Request",
+                "$invalid": false,
+                "settings": {
+                    "headers": {
+                        "Key": "Value"
+                    },
+                    "method": "GET",
+                    "uri": "https://www.google.com",
+                    "responseStatusVariable": "ResponseStatus",
+                    "responseBodyVariable": "ResponseBody"
+                },
+                "$$hashKey": "object:4808"
+            },
+            {
+                "type": "TrackEvent",
+                "$title": "Event tracking",
+                "$invalid": false,
+                "settings": {
+                    "extras": {
+                        "Key": "Value"
+                    },
+                    "category": "Category",
+                    "action": "Action"
+                },
+                "$$hashKey": "object:4876"
+            },
+            {
+                "type": "MergeContact",
+                "$title": "Set contact",
+                "$invalid": false,
+                "settings": {
+                    "extras": {},
+                    "name": "Name",
+                    "email": "Email",
+                    "city": "City",
+                    "phoneNumber": "Phone",
+                    "gender": "male"
+                },
+                "$$hashKey": "object:4945"
+            },
+            {
+                "type": "ManageList",
+                "$title": "Manage distribution list",
+                "$invalid": false,
+                "settings": {
+                    "action": "Add",
+                    "listName": "AddingList.testbuilder@broadcast.msging.net"
+                },
+                "$$hashKey": "object:5043"
+            }
+        ],
+        "$leavingCustomActions": [
+            {
+                "type": "ManageList",
+                "$title": "Manage distribution list",
+                "$invalid": false,
+                "settings": {
+                    "action": "Remove",
+                    "listName": "RemovingList.testbuilder@broadcast.msging.net"
+                },
+                "$$hashKey": "object:5091"
+            },
+            {
+                "type": "ExecuteScript",
+                "$title": "Execute script",
+                "$invalid": false,
+                "settings": {
+                    "function": "run",
+                    "source": "// Receive the variables as parameters\nfunction run() {\n    return \"Hello BLiP\";\n}",
+                    "inputVariables": [
+                        "InputVariable",
+                        "anotherInputVariable"
+                    ],
+                    "outputVariable": "returnVariable"
+                },
+                "$$hashKey": "object:5139"
+            }
+        ],
+        "$inputSuggestions": [],
+        "$defaultOutput": {
+            "stateId": "fallback",
+            "$invalid": false
+        },
+        "id": "a4b80a31-6f42-4789-9470-32b8069a3c9d",
+        "root": false,
+        "$title": "Actions",
+        "$position": {
+            "left": "1204px",
+            "top": "88px"
+        },
+        "$invalidContentActions": false,
+        "$invalidOutputs": false,
+        "$invalidCustomActions": false,
+        "$invalid": false
+    }
+}
