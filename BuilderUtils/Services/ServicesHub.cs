@@ -29,12 +29,20 @@ namespace BuilderUtils.Services
             AddUniversalHubUsingVariable(stateId, conditionalVariable, path);
         }
 
-        private static void AddUniversalHubUsingVariable(string stateId, string conditionalVariable, string path)
+        public void CreateOutputHub(bool verbose, string stateId, string conditionalVariable, string path)
         {
+            AddUniversalHubUsingVariable(stateId, conditionalVariable, path, verbose);
+        }
+
+        private static void AddUniversalHubUsingVariable(string stateId, string conditionalVariable, string path, bool verbose = false)
+        {
+            int count = 0;
             while (!Path.GetExtension(path).Equals(".json"))
             {
                 Console.Beep();
-                Console.Write("File is not a JSON. Retry? (Y/N): ");
+                if (verbose) Console.Write($"File {path} is not a JSON. Retry? (Y/N): ");
+                else Console.Write("File is not a JSON. Retry? (Y/N): ");
+
                 var answer = Console.ReadLine();
                 if (answer.ToUpper().Equals("Y")) path = Console.ReadLine();
                 else break;
@@ -51,7 +59,8 @@ namespace BuilderUtils.Services
                 catch (Exception ex)
                 {
                     Console.Beep();
-                    Console.WriteLine("File is not a valid Builder Flow");
+                    if (verbose) Console.Write($"File {path} is not a valid Builder Flow");
+                    else Console.WriteLine("File is not a valid Builder Flow");
                 }
                 var filename = Path.GetFileNameWithoutExtension(path);
 
@@ -62,6 +71,7 @@ namespace BuilderUtils.Services
 
                     var outputs = proxy.Content.ConditionOutputs;
                     if (outputs.Count() == 0) continue;
+                    VerboseServices.LogVerboseLine(verbose, $"> Creating output from {stateId} to {proxy.Content.Title}...");
                     var extraConditionOutput = new ConditionOutput
                     {
                         ConnId = null,
@@ -80,6 +90,8 @@ namespace BuilderUtils.Services
                     extraConditionOutput.Conditions.Add(extraCondition);
 
                     flow.Proxy.FirstOrDefault(b => b.Key.Equals(stateId)).Content.ConditionOutputs.Add(extraConditionOutput);
+                    VerboseServices.LogVerboseLine(verbose, $">> Successfully created output from {stateId} to {proxy.Content.Title}.");
+                    count++;
                 }
                 flow.ParseProxyIntoFlow();
 
@@ -94,6 +106,7 @@ namespace BuilderUtils.Services
                 var exitName = Path.GetFullPath(path).Replace(Path.GetFileName(path), "") + filename + "EDIT.json";
                 File.WriteAllText(exitName, serialized);
                 Console.WriteLine($"File saved with Path {exitName}");
+                VerboseServices.LogVerboseLine(verbose, $">>> Successfully created output hub on {stateId} to {count} boxes.");
             }
         }
 
