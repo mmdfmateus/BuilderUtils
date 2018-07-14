@@ -17,6 +17,7 @@ namespace DrawBlipBuilderFlow
         private static IServicesHub _servicesHub = new ServicesHub();
         private static ISwitch _verbose;
         private static ISwitch _force;
+        private static ISwitch _help;
 
         static void Main(string[] args)
         {
@@ -55,14 +56,17 @@ namespace DrawBlipBuilderFlow
 
                 _verbose = app.Switch("v").Alias("verbose").HelpText("Enable verbose output.");
                 _force = app.Switch("force").HelpText("Enable force operation.");
+                _help = app.Switch("help");
 
                 var outputHubHandler = new OutputHubHandler();
                 var outputHubCommand = app.Command("output-hub");
-                outputHubHandler.Path = outputHubCommand.Parameter<string>("pth").Alias("path").Alias("pt").HelpText("Full path to the .json file (extension included)");
-                outputHubHandler.StateId = outputHubCommand.Parameter<string>("sid").Alias("stateid").Alias("st").HelpText("state.id of the hub-to-be box");
-                outputHubHandler.Variable = outputHubCommand.Parameter<string>("red").Alias("variable").Alias("var").HelpText("Builder variable to use on Output Condition");
+                // For some unknown reason single dash parameters (ex -pth) are not registering as such, only as double dash (--path)
+                outputHubHandler.Path = outputHubCommand.Parameter<string>("pth").Alias("path").HelpText("Full path to the .json file (extension included)");
+                outputHubHandler.StateId = outputHubCommand.Parameter<string>("sd").Alias("stateid").Alias("st").HelpText("state.id of the hub-to-be box");
+                outputHubHandler.Variable = outputHubCommand.Parameter<string>("rd").Alias("variable").Alias("var").HelpText("Builder variable to use on Output Condition");
                 outputHubHandler.Verbose = _verbose;
                 outputHubHandler.Force = _force;
+                outputHubHandler.Help = _help;
                 outputHubCommand.HelpText("Create a hub box connecting to every input-enabled box in the entire bot.");
                 outputHubCommand.Handler(outputHubHandler.Run);
 

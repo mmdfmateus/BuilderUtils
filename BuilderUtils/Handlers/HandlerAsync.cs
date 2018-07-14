@@ -7,11 +7,6 @@ namespace BuilderUtils.Handlers
 {
     public abstract class HandlerAsync
     {
-        public int Run(string[] args)
-        {
-            return RunAsync(args).GetAwaiter().GetResult();
-        }
-
-        public abstract Task<int> RunAsync(string[] args);
+        public abstract int Run(string[] args);
     }
 }

@@ -15,13 +15,18 @@ namespace BuilderUtils.Handlers
         public INamedParameter<string> Path { get; set; }
         public ISwitch Force { get; set; }
         public ISwitch Verbose { get; set; }
-        public async override Task<int> RunAsync(string[] args)
+        public ISwitch Help { get; set; }
+        public override int Run(string[] args)
         {
             try
             {
-                if (!StateId.IsSet || !Variable.IsSet || !Path.IsSet)
-                    throw new ArgumentNullException("You must provide stateId, variable and path parameters for this action. Use [--stateid], [--variable] and [--path] parameters");
-
+                if ((!StateId.IsSet || !Variable.IsSet || !Path.IsSet) && !Help.IsSet)
+                    throw new ArgumentNullException("You must provide stateId, variable and path parameters for this action. Use [--stateid | --sid], [--variable| --var] and [--path | --pth] parameters");
+                if (Help.IsSet)
+                {
+                    PrintHelp();
+                    return 2;
+                }
                 var stateId = StateId.Value;
                 var path = Path.Value;
                 var variable = Variable.Value;
@@ -31,25 +36,42 @@ namespace BuilderUtils.Handlers
             }
             catch (Exception ex)
             {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine();
-                Console.WriteLine("\tERROR");
-                Console.ResetColor();
-                Console.WriteLine(ex.Message);
-                Console.WriteLine();
-                Console.ForegroundColor = ConsoleColor.Cyan;
-                Console.WriteLine("Null Parameters");
-                Console.ResetColor();
-                Console.WriteLine("===============");
-                Console.WriteLine();
-                Console.ForegroundColor = ConsoleColor.Cyan;
-
-                if (StateId.Value == null) Console.WriteLine(" " + nameof(StateId));
-                if (Variable.Value == null) Console.WriteLine(" " + nameof(Variable));
-                if (Path.Value == null) Console.WriteLine(" " + nameof(Path));
-                Console.ResetColor();
+                PrintException(ex);
                 return 1;
             }
+        }
+
+        private void PrintException(Exception ex)
+        {
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine();
+            Console.WriteLine("\tERROR");
+            Console.ResetColor();
+            Console.WriteLine(ex.Message + "\n");
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.WriteLine("Null Parameters");
+            Console.ResetColor();
+            Console.WriteLine("===============\n");
+            Console.ForegroundColor = ConsoleColor.Cyan;
+
+            if (StateId.Value == null) Console.WriteLine(" " + nameof(StateId));
+            if (Variable.Value == null) Console.WriteLine(" " + nameof(Variable));
+            if (Path.Value == null) Console.WriteLine(" " + nameof(Path));
+            Console.ResetColor();
+        }
+
+        private static void PrintHelp()
+        {
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.WriteLine("Output-Hub Params");
+            Console.ResetColor();
+            Console.WriteLine("===============\n");
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.WriteLine($"  [--stateid]");
+            Console.WriteLine($"  [--variable]");
+            Console.WriteLine($"  [--path]");
+
+            Console.ResetColor();
         }
     }
 }
