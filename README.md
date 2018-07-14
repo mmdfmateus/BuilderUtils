@@ -2,13 +2,15 @@
 **DISCLAIMER: still in very early development stage.**
 
 ## Usage
-This tool can either be run directly from *VisualStudio* or via command line using
-`dotnet build` and `dotnet run`. The latter has argument-rich CLI possibility.
+This tool can either be run directly from *VisualStudio* or via command line using the release (.net Core 2.0). The latter has argument-rich CLI possibility.
 
 ## Current features
-1. [Creation of an exit hub](#exit-hub)
+1. [Exit Hub](#exit-hub)
+    1. [Overview](#exit-hub#overview)
+    1. [Usage](#exit-hub#usage)
 
 ## Exit Hub
+### Overview
 This feature creates a universal hub from a single box that connects it to any other possible box with a single exit condition for each. What defines if a box is possible to be linked or not is whether it as a "UserInput" action or not.
 
 The condition that will be used is if the `variable` defined by the user is **equal** to the title of a box. For example, if you want to go to a box called *Welcome*, the value of the set variable must be **Welcome**. The main objective of this feature is to help on redirecting users back to where they were on the conversational flow before they sent an unexpected input to the Chatbot.
@@ -39,4 +41,6 @@ function run(state, redirect) {
 ```
 ![Exception redirect example](Docs/ExceptionRedirect.png "Exception redirect example")
 
-Remember to provide the return variable a Builder variable name to save
+Remember to provide the return variable a Builder variable name to save.
+### Usage
+PLACEHOLDER
