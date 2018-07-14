@@ -5,11 +5,11 @@
 This tool can either be run directly from *VisualStudio* or via command line using the release (.net Core 2.0). The latter has argument-rich CLI possibility.
 
 ## Current features
-1. [Exit Hub](#exit-hub)
-    1. [Overview](#exit-hub#overview)
-    1. [Usage](#exit-hub#usage)
+1. [Output Hub](#output-hub)
+    1. [Overview](#overview)
+    1. [Usage](#usage-1)
 
-## Exit Hub
+## Output Hub
 ### Overview
 This feature creates a universal hub from a single box that connects it to any other possible box with a single exit condition for each. What defines if a box is possible to be linked or not is whether it as a "UserInput" action or not.
 
@@ -43,4 +43,9 @@ function run(state, redirect) {
 
 Remember to provide the return variable a Builder variable name to save.
 ### Usage
-PLACEHOLDER
+#### VisualStudio
+Open up the solution and start the project. The terminal window should guide you through it.
+#### CLI
+```
+.\BuilderUtils.exe [-v | --verbose] [--path] some-path [--stateid] state-guid [--variable] conditional-variable-name
+```
