@@ -49,64 +49,71 @@ namespace BuilderUtils.Services
             }
             if (Path.GetExtension(path).Equals(".json"))
             {
-                var builderFlowJson = GetBuilderFlow(path);
-                var flow = new BlipBuilderFlow();
-
                 try
                 {
-                    flow = _flowFactory.Build(builderFlowJson);
+                    var builderFlowJson = GetBuilderFlow(path);
+                    var flow = new BlipBuilderFlow();
+
+                    try
+                    {
+                        flow = _flowFactory.Build(builderFlowJson);
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.Beep();
+                        if (verbose) Console.Write($"File {path} is not a valid Builder Flow");
+                        else Console.WriteLine("File is not a valid Builder Flow");
+                    }
+                    var filename = Path.GetFileNameWithoutExtension(path);
+
+                    foreach (BoxProxy proxy in flow.Proxy)
+                    {
+                        if (proxy.Key.Equals(stateId) || proxy.Key.Equals("fallback")) continue;
+                        if (proxy.Content.ContentActions.FirstOrDefault(a => a.Input != null).Input.Bypass) continue;
+
+                        var outputs = proxy.Content.ConditionOutputs;
+                        if (outputs.Count() == 0) continue;
+                        VerboseServices.LogVerboseLine(verbose, $"> Creating output from {stateId} to {proxy.Content.Title}...");
+                        var extraConditionOutput = new ConditionOutput
+                        {
+                            ConnId = null,
+                            StateId = proxy.Key,
+                            Conditions = new List<Condition>()
+                        };
+                        var extraCondition = new Condition
+                        {
+                            Comparison = "equals",
+                            Source = "context",
+                            Values = new List<string>(),
+                            Variable = conditionalVariable
+                        };
+                        extraCondition.Values.Add(proxy.Content.Title);
+
+                        extraConditionOutput.Conditions.Add(extraCondition);
+
+                        flow.Proxy.FirstOrDefault(b => b.Key.Equals(stateId)).Content.ConditionOutputs.Add(extraConditionOutput);
+                        VerboseServices.LogVerboseLine(verbose, $">> Successfully created output from {stateId} to {proxy.Content.Title}.");
+                        count++;
+                    }
+                    flow.ParseProxyIntoFlow();
+
+                    var serialized = string.Empty;
+                    foreach (var box in flow.Boxes)
+                    {
+                        var piece = JsonConvert.SerializeObject(box.Content);
+                        serialized = serialized + piece.Substring(1, piece.Length - 2) + ",";
+                    }
+
+                    serialized = "{" + serialized.Substring(0, serialized.Length - 1) + "}";
+                    var exitName = Path.GetFullPath(path).Replace(Path.GetFileName(path), "") + filename + "EDIT.json";
+                    File.WriteAllText(exitName, serialized);
+                    Console.WriteLine($"File saved with Path {exitName}");
+                    VerboseServices.LogVerboseLine(verbose, $">>> Successfully created output hub on {stateId} to {count} boxes.");
                 }
                 catch (Exception ex)
                 {
-                    Console.Beep();
-                    if (verbose) Console.Write($"File {path} is not a valid Builder Flow");
-                    else Console.WriteLine("File is not a valid Builder Flow");
+                    Console.WriteLine(ex);
                 }
-                var filename = Path.GetFileNameWithoutExtension(path);
-
-                foreach (BoxProxy proxy in flow.Proxy)
-                {
-                    if (proxy.Key.Equals(stateId) || proxy.Key.Equals("fallback")) continue;
-                    if (proxy.Content.ContentActions.FirstOrDefault(a => a.Input != null).Input.Bypass) continue;
-
-                    var outputs = proxy.Content.ConditionOutputs;
-                    if (outputs.Count() == 0) continue;
-                    VerboseServices.LogVerboseLine(verbose, $"> Creating output from {stateId} to {proxy.Content.Title}...");
-                    var extraConditionOutput = new ConditionOutput
-                    {
-                        ConnId = null,
-                        StateId = proxy.Key,
-                        Conditions = new List<Condition>()
-                    };
-                    var extraCondition = new Condition
-                    {
-                        Comparison = "equals",
-                        Source = "context",
-                        Values = new List<string>(),
-                        Variable = conditionalVariable
-                    };
-                    extraCondition.Values.Add(proxy.Content.Title);
-
-                    extraConditionOutput.Conditions.Add(extraCondition);
-
-                    flow.Proxy.FirstOrDefault(b => b.Key.Equals(stateId)).Content.ConditionOutputs.Add(extraConditionOutput);
-                    VerboseServices.LogVerboseLine(verbose, $">> Successfully created output from {stateId} to {proxy.Content.Title}.");
-                    count++;
-                }
-                flow.ParseProxyIntoFlow();
-
-                var serialized = string.Empty;
-                foreach (var box in flow.Boxes)
-                {
-                    var piece = JsonConvert.SerializeObject(box.Content);
-                    serialized = serialized + piece.Substring(1, piece.Length - 2) + ",";
-                }
-
-                serialized = "{" + serialized.Substring(0, serialized.Length - 1) + "}";
-                var exitName = Path.GetFullPath(path).Replace(Path.GetFileName(path), "") + filename + "EDIT.json";
-                File.WriteAllText(exitName, serialized);
-                Console.WriteLine($"File saved with Path {exitName}");
-                VerboseServices.LogVerboseLine(verbose, $">>> Successfully created output hub on {stateId} to {count} boxes.");
             }
         }
 

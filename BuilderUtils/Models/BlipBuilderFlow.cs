@@ -87,6 +87,24 @@ namespace BuilderUtils.Models
 
         [JsonProperty("$invalid")]
         public bool Invalid { get; set; }
+
+        [JsonProperty("$tags")]
+        public List<Tag> Tags { get; set; }
+    }
+
+    public partial class Tag
+    {
+        [JsonProperty("background")]
+        public string Background { get; set; }
+
+        [JsonProperty("label")]
+        public string Label { get; set; }
+
+        [JsonProperty("id")]
+        public string Id { get; set; }
+
+        [JsonProperty("canChangeBackground")]
+        public bool CanChangeBackground { get; set; }
     }
 
     public partial class CustomAction
@@ -109,6 +127,12 @@ namespace BuilderUtils.Models
 
     public partial class CustomActionSettings
     {
+        [JsonProperty("variable")]
+        public string Variable { get; set; }
+
+        [JsonProperty("value")]
+        public string Value { get; set; }
+
         [JsonProperty("action", NullValueHandling = NullValueHandling.Ignore)]
         public string Action { get; set; }
 
