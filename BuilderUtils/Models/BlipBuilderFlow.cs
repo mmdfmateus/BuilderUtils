@@ -162,7 +162,7 @@ namespace BuilderUtils.Models
 
         [JsonProperty("gender", NullValueHandling = NullValueHandling.Ignore)]
         public string Gender { get; set; }
-        [JsonProperty("body")]
+        [JsonProperty("body", NullValueHandling = NullValueHandling.Ignore)]
         public string Body { get; set; }
     }
 
@@ -278,6 +278,8 @@ namespace BuilderUtils.Models
 
         [JsonProperty("$invalid")]
         public bool Invalid { get; set; }
+        [JsonProperty("variable", NullValueHandling = NullValueHandling.Ignore)]
+        public string variable { get; set; }
     }
 
     public partial class InputCardContent

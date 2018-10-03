@@ -114,5 +114,112 @@ namespace BuilderUtils.Services
         {
             return JsonConvert.DeserializeObject<JObject>(File.ReadAllText(path));
         }
+
+        public void InsertExtrasEventTrack(Dictionary<string, string> Extras)
+        {
+            Console.WriteLine("What is the FULL PATH of the exported .json file?");
+            var path = Console.ReadLine();
+            var builderFlowJson = GetBuilderFlow(path);
+            var flow = _flowFactory.Build(builderFlowJson);
+            foreach (var box in flow.Boxes)
+            {
+                foreach (var item in box.Content)
+                {
+                    if (!item.Value.Title.Contains("Início") && 
+                        !item.Value.Title.Contains("Exceções") && 
+                        !item.Value.Title.ToLower().Contains("trk") && 
+                        !item.Value.Title.ToLower().Contains("http") &&
+                        !item.Value.Title.ToLower().Contains("save data") &&
+                        !item.Value.Title.ToLower().Contains("altera canal") &&
+                        !item.Value.Title.ToLower().Contains("3.1 valida statuscodenlp") &&
+                        !item.Value.Title.ToLower().Contains("fluxo erro chamada api") &&
+                        !item.Value.Title.ToLower().Contains("4. 1 intenção encontrada") &&
+                        !item.Value.Title.ToLower().Contains("valida entidades") &&
+                        !item.Value.Title.ToLower().Contains("4.Valida Intenção") &&
+                        !item.Value.Title.ToLower().Contains("4.1.1.a valida intenção com contexto") &&
+                        !item.Value.Title.ToLower().Contains("4.a resposta smalltalk"))
+                    {
+                        if (item.Value.LeavingCustomActions == null)
+                            item.Value.LeavingCustomActions = new List<CustomAction>();
+
+                        item.Value.LeavingCustomActions.Add(new CustomAction()
+                        {
+                            HashKey = null,
+                            Invalid = false,
+                            Type = "TrackEvent",
+                            Title = "Registro de eventos",
+                            Settings = new CustomActionSettings()
+                            {
+                                Category = "Mensagens por canal",
+                                Action = "{{contact.extras.Canal}}",
+                                Extras = new Dictionary<string, string>()
+                            }
+
+                        });
+                    }
+
+                    foreach (var leavingCustomActions in item.Value.LeavingCustomActions)
+                    {
+                        if (leavingCustomActions.Type.Contains("TrackEvent"))
+                        {
+                            var value = string.Empty;
+                            foreach (var extra in Extras)
+                            {
+                                if (extra.Key.Contains("Regional do usuario"))
+                                {
+                                    if (leavingCustomActions.Settings.Extras.TryGetValue(extra.Key, out value))
+                                        leavingCustomActions.Settings.Extras[extra.Key] = value;
+                                    else
+                                        leavingCustomActions.Settings.Extras.Add(extra.Key, extra.Value);
+                                }
+                                else if (extra.Key.Contains("Canal"))
+                                {
+                                    if (leavingCustomActions.Settings.Extras.TryGetValue(extra.Key, out value))
+                                        leavingCustomActions.Settings.Extras[extra.Key] = "{{contact.extras.Canal}}";
+                                    else
+                                        leavingCustomActions.Settings.Extras.Add(extra.Key, extra.Value);
+
+                                }
+                                else
+                                {
+                                    if (!leavingCustomActions.Settings.Extras.TryGetValue(extra.Key, out value))
+                                        leavingCustomActions.Settings.Extras.Add(extra.Key, extra.Value);
+                                }
+                            }
+
+                            Console.WriteLine(leavingCustomActions.Title);
+                        }
+                    }
+
+                    foreach (var enteringCustomAction in item.Value.EnteringCustomActions)
+                    {
+                        if (enteringCustomAction.Type.Contains("TrackEvent"))
+                        {
+                            var value = string.Empty;
+                            foreach (var extra in Extras)
+                            {
+                                if (!enteringCustomAction.Settings.Extras.TryGetValue(extra.Key, out value))
+                                    enteringCustomAction.Settings.Extras.Add(extra.Key, extra.Value);
+                            }
+
+                            Console.WriteLine(enteringCustomAction.Title);
+                        }
+                    }
+                }
+            }
+
+            var serialized = string.Empty;
+            foreach (var box in flow.Boxes)
+            {
+                var piece = JsonConvert.SerializeObject(box.Content);
+                serialized = serialized + piece.Substring(1, piece.Length - 2) + ",";
+            }
+
+            serialized = "{" + serialized.Substring(0, serialized.Length - 1) + "}";
+
+            path = $"{Path.GetDirectoryName(path)}\\flow.json";
+            Console.WriteLine(path);
+            System.IO.File.WriteAllText(path, serialized);
+        }
     }
 }
