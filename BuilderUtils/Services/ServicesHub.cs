@@ -1,4 +1,5 @@
-﻿using BuilderUtils.Models;
+﻿using BuilderUtils.Extensions;
+using BuilderUtils.Models;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
@@ -122,78 +123,52 @@ namespace BuilderUtils.Services
             return JsonConvert.DeserializeObject<JObject>(File.ReadAllText(path));
         }
 
-        public void InsertExtrasEventTrack(Dictionary<string, string> Extras)
+        public void InsertExtrasEventTrack()
         {
+            Console.Title = "[BLiP Builder Utils] Creating Extras";
+            Console.WriteLine("Write the extras using the following format (comma separated):");
+            Console.WriteLine("ExtraKey, ExtraValue");
+            Console.WriteLine("The basic extras (userId and originatorMessageId) are added by default");
+            Console.WriteLine("When you're done, type '0' (without quotes)");
+            var extraInput = Console.ReadLine();
+            var extras = new Dictionary<string, string>
+            {
+                { "userId", "{{contact.identity}}" },
+                { "originatorMessageId", "{{input.message@id}}" }
+            };
+
+            while (extraInput != "0")
+            {
+                var tokens = extraInput.Split(',', StringSplitOptions.RemoveEmptyEntries);
+                if (tokens.Length != 2)
+                {
+                    Console.WriteLine($"{extraInput} is not a valid extra pair");
+                }
+                extras.Add(tokens[0].Trim(), tokens[1].Trim());
+                extraInput = Console.ReadLine();
+            }
+
             Console.WriteLine("What is the FULL PATH of the exported .json file?");
             var path = Console.ReadLine();
+
             var builderFlowJson = GetBuilderFlow(path);
             var flow = _flowFactory.Build(builderFlowJson);
             foreach (var box in flow.Boxes)
             {
                 foreach (var item in box.Content)
                 {
-                    if (!item.Value.Title.Contains("Início") && 
-                        !item.Value.Title.Contains("Exceções") && 
-                        !item.Value.Title.ToLower().Contains("trk") && 
-                        !item.Value.Title.ToLower().Contains("http") &&
-                        !item.Value.Title.ToLower().Contains("save data") &&
-                        !item.Value.Title.ToLower().Contains("altera canal") &&
-                        !item.Value.Title.ToLower().Contains("3.1 valida statuscodenlp") &&
-                        !item.Value.Title.ToLower().Contains("fluxo erro chamada api") &&
-                        !item.Value.Title.ToLower().Contains("4. 1 intenção encontrada") &&
-                        !item.Value.Title.ToLower().Contains("valida entidades") &&
-                        !item.Value.Title.ToLower().Contains("4.Valida Intenção") &&
-                        !item.Value.Title.ToLower().Contains("4.1.1.a valida intenção com contexto") &&
-                        !item.Value.Title.ToLower().Contains("4.a resposta smalltalk"))
-                    {
-                        if (item.Value.LeavingCustomActions == null)
-                            item.Value.LeavingCustomActions = new List<CustomAction>();
-
-                        item.Value.LeavingCustomActions.Add(new CustomAction()
-                        {
-                            HashKey = null,
-                            Invalid = false,
-                            Type = "TrackEvent",
-                            Title = "Registro de eventos",
-                            Settings = new CustomActionSettings()
-                            {
-                                Category = "Mensagens por canal",
-                                Action = "{{contact.extras.Canal}}",
-                                Extras = new Dictionary<string, string>()
-                            }
-
-                        });
-                    }
-
                     foreach (var leavingCustomActions in item.Value.LeavingCustomActions)
                     {
                         if (leavingCustomActions.Type.Contains("TrackEvent"))
                         {
                             var value = string.Empty;
-                            foreach (var extra in Extras)
+                            foreach (var extra in extras)
                             {
-                                if (extra.Key.Contains("Regional do usuario"))
+                                if (!leavingCustomActions.Settings.Extras.ContainsKey(extra.Key))
                                 {
-                                    if (leavingCustomActions.Settings.Extras.TryGetValue(extra.Key, out value))
-                                        leavingCustomActions.Settings.Extras[extra.Key] = value;
-                                    else
-                                        leavingCustomActions.Settings.Extras.Add(extra.Key, extra.Value);
-                                }
-                                else if (extra.Key.Contains("Canal"))
-                                {
-                                    if (leavingCustomActions.Settings.Extras.TryGetValue(extra.Key, out value))
-                                        leavingCustomActions.Settings.Extras[extra.Key] = "{{contact.extras.Canal}}";
-                                    else
-                                        leavingCustomActions.Settings.Extras.Add(extra.Key, extra.Value);
-
-                                }
-                                else
-                                {
-                                    if (!leavingCustomActions.Settings.Extras.TryGetValue(extra.Key, out value))
-                                        leavingCustomActions.Settings.Extras.Add(extra.Key, extra.Value);
+                                    leavingCustomActions.Settings.Extras.Add(extra);
                                 }
                             }
-
                             Console.WriteLine(leavingCustomActions.Title);
                         }
                     }
@@ -203,10 +178,12 @@ namespace BuilderUtils.Services
                         if (enteringCustomAction.Type.Contains("TrackEvent"))
                         {
                             var value = string.Empty;
-                            foreach (var extra in Extras)
+                            foreach (var extra in extras)
                             {
-                                if (!enteringCustomAction.Settings.Extras.TryGetValue(extra.Key, out value))
-                                    enteringCustomAction.Settings.Extras.Add(extra.Key, extra.Value);
+                                if (!enteringCustomAction.Settings.Extras.ContainsKey(extra.Key))
+                                {
+                                    enteringCustomAction.Settings.Extras.Add(extra);
+                                }
                             }
 
                             Console.WriteLine(enteringCustomAction.Title);

@@ -38,22 +38,8 @@ namespace DrawBlipBuilderFlow
                         _servicesHub.CreateOutputHub();
                         break;
                     case "2":
-                        {
-                            var extras = new Dictionary<string, string>();
-                            extras.Add("Texto digitado", "{{contact.extras.TextoDigitado}}");
-                            extras.Add("Origem", "{{contact.extras.FlowId}}");
-                            extras.Add("UserId", "{{contact.identity}}");
-                            extras.Add("MessageOriginatorId", "{{input.message@id}}");
-                            extras.Add("Nome do usuario", "{{contact.Name}}");
-                            extras.Add("Marca do usuario", "{{contact.extras.marca}}");
-                            extras.Add("Regional do usuario", "{{contact.city}}");
-                            extras.Add("Cargo do usuario", "{{contact.extras.cargo}}");
-                            extras.Add("Email do usuario", "{{contact.email}}");
-                            extras.Add("Canal", "{{contact.extras.Canal}}");
-                            extras.Add("Resposta nlp", "{{contact.extras.nlpResponse}}");
-                            _servicesHub.InsertExtrasEventTrack(extras);
-                            break;
-                        }
+                        _servicesHub.InsertExtrasEventTrack();
+                        break;
                     default:
                         break;
                 }
