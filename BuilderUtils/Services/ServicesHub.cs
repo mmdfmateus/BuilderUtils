@@ -13,6 +13,7 @@ namespace BuilderUtils.Services
     public class ServicesHub : IServicesHub
     {
         private static IBlipBuilderFlowFactory _flowFactory { get; set; }
+        private string ComposingState = "application/vnd.lime.chatstate+json";
 
         public ServicesHub()
         {
@@ -204,6 +205,38 @@ namespace BuilderUtils.Services
             path = $"{Path.GetDirectoryName(path)}\\flow.json";
             Console.WriteLine(path);
             System.IO.File.WriteAllText(path, serialized);
+        }
+
+        public void InsertChatbaseRequests()
+        {
+            Console.WriteLine("What is the FULL PATH of the exported .json file?");
+            var path = Console.ReadLine();
+
+            var builderFlowJson = GetBuilderFlow(path);
+            var flow = _flowFactory.Build(builderFlowJson);
+
+            foreach (var box in flow.Boxes)
+            {
+                foreach (var item in box.Content)
+                {
+                    foreach (var customAction in item.Value.ContentActions)
+                    {
+                        if (!customAction.Action.Equals(null))
+                        {
+                            if(customAction.Action.Settings.Type == ComposingState)
+                            {
+
+                            }
+                        } else if (!customAction.Input.Equals(null))
+                        {
+
+                        }
+                        
+                    }
+
+
+                }
+            }
         }
     }
 }
