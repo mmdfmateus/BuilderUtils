@@ -13,12 +13,18 @@ namespace BuilderUtils.Services
     public class ServicesHub : IServicesHub
     {
         private static IBlipBuilderFlowFactory _flowFactory { get; set; }
-        private string ComposingState = "application/vnd.lime.chatstate+json";
+        private static IChatbaseRequestFactory _chatbaseRequestFactory { get; set; }
+
+        private ChatbaseExtension _chatbaseExtension;
+        private readonly string ComposingState = "application/vnd.lime.chatstate+json";
 
         public ServicesHub()
         {
             _flowFactory = new BlipBuilderFlowFactory();
+            _chatbaseRequestFactory = new ChatbaseRequestFactory();
+            _chatbaseExtension = new ChatbaseExtension();
         }
+
         public void CreateOutputHub()
         {
             Console.Title = "[BLiP Builder Utils] Creating Output Hub";
@@ -124,6 +130,11 @@ namespace BuilderUtils.Services
             return JsonConvert.DeserializeObject<JObject>(File.ReadAllText(path));
         }
 
+        public static JObject GetChatbaseDeserialized()
+        {
+            return JsonConvert.DeserializeObject<JObject>(File.ReadAllText($"{Directory.GetCurrentDirectory()}/chatbaserequest.json"));
+        }
+
         public void InsertExtrasEventTrack()
         {
             Console.Title = "[BLiP Builder Utils] Creating Extras";
@@ -215,23 +226,47 @@ namespace BuilderUtils.Services
             var builderFlowJson = GetBuilderFlow(path);
             var flow = _flowFactory.Build(builderFlowJson);
 
+            var cbRequestJson = GetChatbaseDeserialized();
+            var chatbaseRequest = _chatbaseRequestFactory.Build(cbRequestJson);
+
             foreach (var box in flow.Boxes)
             {
                 foreach (var item in box.Content)
                 {
                     foreach (var customAction in item.Value.ContentActions)
                     {
-                        if (!customAction.Action.Equals(null))
+                        try
                         {
-                            if(customAction.Action.Settings.Type == ComposingState)
+                            if (!(customAction.Action.Settings.Type == ComposingState))
                             {
-
+                                var agentMessage = customAction.Action.CardContent.Document.Content.ToString();
+                                item.Value.EnteringCustomActions.Add(_chatbaseExtension.GetAgentChatbaseCustomAction(agentMessage, chatbaseRequest));
+                                //item.Value.ContentActions.Add();
                             }
-                        } else if (!customAction.Input.Equals(null))
-                        {
-
                         }
-                        
+                         catch (NullReferenceException)
+                        {
+                            throw;
+                        }
+
+
+
+
+
+
+                        //if (!customAction.Action.Equals(null))
+                        //{
+                        //    if(!(customAction.Action.Settings.Type == ComposingState))
+                        //    {
+                        //        var agentMessage = customAction.Action.CardContent.Document.Content.ToString();
+                        //        item.Value.EnteringCustomActions.Add(_chatbaseExtension.GetAgentChatbaseCustomAction(agentMessage, chatbaseRequest));
+                        //        //item.Value.ContentActions.Add();
+                        //    }
+                        //} else if (!customAction.Input.Equals(null))
+                        //{
+
+                        //}
+
                     }
 
 

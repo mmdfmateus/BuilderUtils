@@ -30,6 +30,7 @@ namespace DrawBlipBuilderFlow
                 Console.WriteLine("What would you like to do?");
                 Console.WriteLine("1- Create output hub");
                 Console.WriteLine("2- Insert extras in TrackEvents");
+                Console.WriteLine("3- Insert Chatbase requests (IN PROGRESS)");
                 Console.Write("Answer: ");
                 var answer = Console.ReadLine();
                 switch (answer)
@@ -39,6 +40,9 @@ namespace DrawBlipBuilderFlow
                         break;
                     case "2":
                         _servicesHub.InsertExtrasEventTrack();
+                        break;
+                    case "3":
+                        _servicesHub.InsertChatbaseRequests();
                         break;
                     default:
                         break;
