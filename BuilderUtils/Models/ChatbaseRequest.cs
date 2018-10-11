@@ -43,6 +43,6 @@ namespace BuilderUtils.Models
         public string UserId { get; set; }
 
         [JsonProperty("time_stamp")]
-        public int TimeStamp { get; set; }
+        public string TimeStamp { get; set; }
     }
 }

@@ -132,7 +132,7 @@ namespace BuilderUtils.Services
 
         public static JObject GetChatbaseDeserialized()
         {
-            return JsonConvert.DeserializeObject<JObject>(File.ReadAllText($"{Directory.GetCurrentDirectory()}/chatbaserequest.json"));
+            return JsonConvert.DeserializeObject<JObject>(File.ReadAllText($"{Directory.GetCurrentDirectory()}/chatbaserequestbody.json"));
         }
 
         public void InsertExtrasEventTrack()
@@ -235,43 +235,48 @@ namespace BuilderUtils.Services
                 {
                     foreach (var customAction in item.Value.ContentActions)
                     {
-                        try
+                        if (customAction.Action != null)
                         {
-                            if (!(customAction.Action.Settings.Type == ComposingState))
+
+                            if (customAction.Action.Settings.Type != ComposingState)
                             {
                                 var agentMessage = customAction.Action.CardContent.Document.Content.ToString();
                                 item.Value.EnteringCustomActions.Add(_chatbaseExtension.GetAgentChatbaseCustomAction(agentMessage, chatbaseRequest));
-                                //item.Value.ContentActions.Add();
                             }
+
                         }
-                         catch (NullReferenceException)
+                        else if (customAction.Input != null)
                         {
-                            throw;
+
+                            if (customAction.Input.Bypass == false)
+                            {
+                                var cbRequestBody = _chatbaseExtension.GetChatbaseBodyRequest(type: "user", message: "{{input.content}}");
+                                item.Value.LeavingCustomActions.Add(_chatbaseExtension.GetUserChatbaseCustomAction(cbRequestBody));
+                            }
+
                         }
 
 
-
-
-
-
-                        //if (!customAction.Action.Equals(null))
-                        //{
-                        //    if(!(customAction.Action.Settings.Type == ComposingState))
-                        //    {
-                        //        var agentMessage = customAction.Action.CardContent.Document.Content.ToString();
-                        //        item.Value.EnteringCustomActions.Add(_chatbaseExtension.GetAgentChatbaseCustomAction(agentMessage, chatbaseRequest));
-                        //        //item.Value.ContentActions.Add();
-                        //    }
-                        //} else if (!customAction.Input.Equals(null))
-                        //{
-
-                        //}
 
                     }
 
 
                 }
             }
+
+            flow.ParseProxyIntoFlow();
+
+            var serialized = string.Empty;
+            foreach (var box in flow.Boxes)
+            {
+                var piece = JsonConvert.SerializeObject(box.Content);
+                serialized = serialized + piece.Substring(1, piece.Length - 2) + ",";
+            }
+
+            serialized = "{" + serialized.Substring(0, serialized.Length - 1) + "}";
+            var exitName = path + "EDIT.json";//Path.GetFullPath(path).Replace(Path.GetFileName(path), "") + path + "EDIT.json";
+            File.WriteAllText(exitName, serialized);
+            Console.WriteLine($"File saved with Path {exitName}");
         }
     }
 }

@@ -10,28 +10,34 @@ namespace BuilderUtils.Extensions
 {
     public class ChatbaseExtension
     {
-        private readonly Random rand = new Random();
-        public JObject chatbaseRequest;
-
-        public string GetChatbaseBodyRequest(ChatbaseRequest cbRequest, string type, string message)
+        public ChatbaseRequest GetChatbaseBodyRequest(ChatbaseRequest cbRequest = null, string type = "", string message = "", bool notHandled = false)
         {
-            cbRequest.Content.Type = type;
-            cbRequest.Content.Message = message;
+            if (cbRequest == null)
+                cbRequest = new ChatbaseRequest()
+                {
+                    Content = new CBBoxContent()
+                    {
+                        ApiKey = "{{config.chatbaseUrl}}",
+                        Type = (type == "") ? "agent" : type,
+                        Platform = "WhatsApp",
+                        Message = (message == "") ? "{{input.content}}" : message,
+                        Intent = "",
+                        NotHandled = (notHandled) ? notHandled : false,
+                        Version = "1.0",
+                        UserId = "{{contact.identity}}",
+                        TimeStamp = "{{calendar.unixTimeMilliseconds}}",
+                    }
+                };
+            cbRequest.Content.NotHandled = notHandled;
 
-            return JsonConvert.SerializeObject(cbRequest.Content);
+            return cbRequest;
         }
 
-        public CustomAction GetAgentChatbaseCustomAction(string agentMessage, 
+        public CustomAction GetAgentChatbaseCustomAction(string agentMessage,
             ChatbaseRequest cbRequest,
-            string bodyRequest = null, 
-            string type = null, 
+            string type = null,
             string message = null)
         {
-
-            if (bodyRequest.Equals(null))
-            {
-                bodyRequest = GetChatbaseBodyRequest(cbRequest, type, message);
-            }
 
             var action = new CustomAction()
             {
@@ -42,7 +48,26 @@ namespace BuilderUtils.Extensions
                 {
                     Headers = { },
                     Method = "POST",
-                    Body = JsonConvert.SerializeObject(bodyRequest),
+                    Body = JsonConvert.SerializeObject(cbRequest),
+                    Uri = "{{config.chatbaseUrl}}"
+                }
+            };
+
+            return action;
+        }
+
+        public CustomAction GetUserChatbaseCustomAction(ChatbaseRequest cbRequest)
+        {
+            var action = new CustomAction()
+            {
+                Type = "ProcessHttp",
+                Title = "Chatbase Event Tracking - User",
+                Invalid = false,
+                Settings = new CustomActionSettings()
+                {
+                    Headers = { },
+                    Method = "POST",
+                    Body = JsonConvert.SerializeObject(cbRequest),
                     Uri = "{{config.chatbaseUrl}}"
                 }
             };
