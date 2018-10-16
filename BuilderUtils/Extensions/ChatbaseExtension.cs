@@ -10,33 +10,50 @@ namespace BuilderUtils.Extensions
 {
     public class ChatbaseExtension
     {
-        public ChatbaseRequest GetChatbaseBodyRequest(ChatbaseRequest cbRequest = null, string type = "", string message = "", bool notHandled = false)
+
+        public ChatbaseRequest GetChatbaseBodyRequest(ChatbaseRequest cbRequest = null, string type = "", string message = "", bool notHandled = false, string intent = "")
         {
+
             if (cbRequest == null)
-                cbRequest = new ChatbaseRequest()
-                {
-                    Content = new CBBoxContent()
-                    {
-                        ApiKey = "{{config.chatbaseUrl}}",
-                        Type = (type == "") ? "agent" : type,
-                        Platform = "WhatsApp",
-                        Message = (message == "") ? "{{input.content}}" : message,
-                        Intent = "",
-                        NotHandled = (notHandled) ? notHandled : false,
-                        Version = "1.0",
-                        UserId = "{{contact.identity}}",
-                        TimeStamp = "{{calendar.unixTimeMilliseconds}}",
-                    }
-                };
-            cbRequest.Content.NotHandled = notHandled;
+                cbRequest = new ChatbaseRequest();
+            cbRequest.Messages.Add(new CBBoxContent()
+            {
+                ApiKey = "{{config.chatbaseApiKey}}",
+                Type = (type == "") ? "agent" : type,
+                Platform = "WhatsApp",
+                Message = (message == "") ? "{{input.content}}" : message,
+                Intent = (intent == "") ? "" : intent,
+                NotHandled = (notHandled) ? notHandled : false,
+                Version = "1.0",
+                UserId = "{{contact.identity}}",
+                TimeStamp = "{{calendar.unixTimeMilliseconds}}",
+            });
 
             return cbRequest;
         }
 
-        public CustomAction GetAgentChatbaseCustomAction(string agentMessage,
-            ChatbaseRequest cbRequest,
-            string type = null,
-            string message = null)
+        public ChatbaseRequest GetAgentBodyRequest(ChatbaseRequest cbRequest = null, string type = "", string message = "", bool notHandled = false, string intent = "")
+        {
+
+            if (cbRequest == null)
+                cbRequest = new ChatbaseRequest();
+            cbRequest.Messages.Add(new CBBoxContent()
+            {
+                ApiKey = "{{config.chatbaseApiKey}}",
+                Type = (type == "") ? "agent" : type,
+                Platform = "WhatsApp",
+                Message = (message == "") ? "{{input.content}}" : message,
+                Intent = (intent == "") ? "" : intent,
+                NotHandled = (notHandled) ? notHandled : false,
+                Version = "1.0",
+                UserId = "{{contact.identity}}",
+                TimeStamp = "{{calendar.unixTimeMilliseconds}}",
+            });
+
+            return cbRequest;
+        }
+
+        public CustomAction GetAgentChatbaseCustomAction(ChatbaseRequest cbRequest, string agentMessage = "", string type = null, string message = null)
         {
 
             var action = new CustomAction()
@@ -52,6 +69,7 @@ namespace BuilderUtils.Extensions
                     Uri = "{{config.chatbaseUrl}}"
                 }
             };
+
 
             return action;
         }
@@ -74,5 +92,6 @@ namespace BuilderUtils.Extensions
 
             return action;
         }
+
     }
 }

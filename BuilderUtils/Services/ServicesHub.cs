@@ -228,22 +228,24 @@ namespace BuilderUtils.Services
 
             var cbRequestJson = GetChatbaseDeserialized();
             var chatbaseRequest = _chatbaseRequestFactory.Build(cbRequestJson);
+            var agentMessages = new ChatbaseRequest();
 
             foreach (var box in flow.Boxes)
             {
                 foreach (var item in box.Content)
                 {
+                    agentMessages.Messages.Clear();
                     foreach (var customAction in item.Value.ContentActions)
                     {
+                        
                         if (customAction.Action != null)
                         {
 
                             if (customAction.Action.Settings.Type != ComposingState)
                             {
                                 var agentMessage = customAction.Action.CardContent.Document.Content.ToString();
-                                item.Value.EnteringCustomActions.Add(_chatbaseExtension.GetAgentChatbaseCustomAction(agentMessage, chatbaseRequest));
+                                agentMessages = _chatbaseExtension.GetAgentBodyRequest(chatbaseRequest, message: agentMessage);
                             }
-
                         }
                         else if (customAction.Input != null)
                         {
@@ -253,12 +255,11 @@ namespace BuilderUtils.Services
                                 var cbRequestBody = _chatbaseExtension.GetChatbaseBodyRequest(type: "user", message: "{{input.content}}");
                                 item.Value.LeavingCustomActions.Add(_chatbaseExtension.GetUserChatbaseCustomAction(cbRequestBody));
                             }
-
                         }
 
-
-
                     }
+                    if(agentMessages.Messages.Count > 0)
+                        item.Value.EnteringCustomActions.Add(_chatbaseExtension.GetAgentChatbaseCustomAction(agentMessages));
 
 
                 }
@@ -276,7 +277,10 @@ namespace BuilderUtils.Services
             serialized = "{" + serialized.Substring(0, serialized.Length - 1) + "}";
             var exitName = path + "EDIT.json";//Path.GetFullPath(path).Replace(Path.GetFileName(path), "") + path + "EDIT.json";
             File.WriteAllText(exitName, serialized);
-            Console.WriteLine($"File saved with Path {exitName}");
+            Console.WriteLine($"File saved with Path {exitName}"); 
         }
+
+
+
     }
 }

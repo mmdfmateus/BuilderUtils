@@ -11,8 +11,7 @@ namespace BuilderUtils.Services
     {
         public ChatbaseRequest Build(JObject deserializedJsonFlow)
         {
-            var flow = new ChatbaseRequest();
-            flow.Content = JsonConvert.DeserializeObject<CBBoxContent>(JsonConvert.SerializeObject(deserializedJsonFlow));
+            var flow = JsonConvert.DeserializeObject<ChatbaseRequest>(JsonConvert.SerializeObject(deserializedJsonFlow));
 
             return flow;
         }
