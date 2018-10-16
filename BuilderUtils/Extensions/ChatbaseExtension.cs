@@ -35,7 +35,7 @@ namespace BuilderUtils.Extensions
         public ChatbaseRequest GetAgentBodyRequest(ChatbaseRequest cbRequest = null, string message = "", bool notHandled = false, string intent = "")
         {
 
-            if (cbRequest == null)
+            if (cbRequest == null || cbRequest.Messages.Count == 0)
                 cbRequest = new ChatbaseRequest();
             cbRequest.Messages.Add(new CBBoxContent()
             {

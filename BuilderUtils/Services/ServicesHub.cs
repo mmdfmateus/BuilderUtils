@@ -244,7 +244,7 @@ namespace BuilderUtils.Services
                             if (customAction.Action.Settings.Type != ComposingState)
                             {
                                 var agentMessage = customAction.Action.CardContent.Document.Content.ToString();
-                                agentMessages = _chatbaseExtension.GetAgentBodyRequest(chatbaseRequest, message: agentMessage);
+                                agentMessages = _chatbaseExtension.GetAgentBodyRequest(agentMessages, message: agentMessage);
                             }
                         }
                         else if (customAction.Input != null)
