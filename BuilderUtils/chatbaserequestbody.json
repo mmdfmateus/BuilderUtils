@@ -3,7 +3,7 @@
   "type": "agent",
   "user_id": "{{contact.identity}}",
   "time_stamp": "{{calendar.unixTimeMilliseconds}}",
-  "platform": "{{config.chatbasePlataform}}",
-  "message": "O que está achando do seu Cronos?",
+  "platform": "{{config.chatbasePlatform}}",
+  "message": "",
   "version": "{{config.chatbaseVersion}}"
 }

@@ -20,11 +20,11 @@ namespace BuilderUtils.Extensions
             {
                 ApiKey = "{{config.chatbaseApiKey}}",
                 Type = (type == "") ? "agent" : type,
-                Platform = "WhatsApp",
+                Platform = "{{config.chatbasePlatform}}",
                 Message = (message == "") ? "{{input.content}}" : message,
                 Intent = (intent == "") ? "" : intent,
                 NotHandled = (notHandled) ? notHandled : false,
-                Version = "1.0",
+                Version = "{{config.chatbaseVersion}}",
                 UserId = "{{contact.identity}}",
                 TimeStamp = "{{calendar.unixTimeMilliseconds}}",
             });
@@ -32,7 +32,7 @@ namespace BuilderUtils.Extensions
             return cbRequest;
         }
 
-        public ChatbaseRequest GetAgentBodyRequest(ChatbaseRequest cbRequest = null, string type = "", string message = "", bool notHandled = false, string intent = "")
+        public ChatbaseRequest GetAgentBodyRequest(ChatbaseRequest cbRequest = null, string message = "", bool notHandled = false, string intent = "")
         {
 
             if (cbRequest == null)
@@ -40,12 +40,12 @@ namespace BuilderUtils.Extensions
             cbRequest.Messages.Add(new CBBoxContent()
             {
                 ApiKey = "{{config.chatbaseApiKey}}",
-                Type = (type == "") ? "agent" : type,
-                Platform = "WhatsApp",
-                Message = (message == "") ? "{{input.content}}" : message,
-                Intent = (intent == "") ? "" : intent,
-                NotHandled = (notHandled) ? notHandled : false,
-                Version = "1.0",
+                Type = "agent",
+                Platform = "{{config.chatbasePlatform}}",
+                Message = (message == "") ? "" : message,
+                //Intent = (intent == "") ? "" : intent,
+                //NotHandled = (notHandled) ? notHandled : false,
+                Version = "{{config.chatbaseVersion}}",
                 UserId = "{{contact.identity}}",
                 TimeStamp = "{{calendar.unixTimeMilliseconds}}",
             });
