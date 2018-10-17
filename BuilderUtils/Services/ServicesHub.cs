@@ -231,6 +231,13 @@ namespace BuilderUtils.Services
             var cbRequestJson = GetChatbaseDeserialized();
             var chatbaseRequest = _chatbaseRequestFactory.Build(cbRequestJson);
             var agentMessages = new ChatbaseRequest();
+            var chatbaseTag = new Tag()
+            {
+                Background = "#ffce1e",
+                CanChangeBackground = false,
+                Id = "blip-tag-" + Guid.NewGuid().ToString(),
+                Label = "Chatbase",
+            };
 
             foreach (var box in flow.Boxes)
             {
@@ -239,13 +246,21 @@ namespace BuilderUtils.Services
                     agentMessages.Messages.Clear();
                     foreach (var customAction in item.Value.ContentActions)
                     {
-                        
+
                         if (customAction.Action != null)
                         {
 
                             if (customAction.Action.Settings.Type != ComposingState)
                             {
-                                var agentMessage = customAction.Action.CardContent.Document.Content.ToString();
+                                var agentMessage = "";
+                                if (customAction.Action.Type != "SendMessage")
+                                {
+                                    agentMessage = customAction.Action.Settings.RawContent;
+                                }
+                                else
+                                {
+                                    agentMessage = customAction.Action.CardContent.Document.Content.ToString();
+                                }
                                 agentMessages = _chatbaseExtension.GetAgentBodyRequest(agentMessages, message: agentMessage);
                             }
                         }
@@ -256,12 +271,21 @@ namespace BuilderUtils.Services
                             {
                                 var cbRequestBody = _chatbaseExtension.GetChatbaseBodyRequest(type: "user", message: "{{input.content}}");
                                 item.Value.LeavingCustomActions.Add(_chatbaseExtension.GetUserChatbaseCustomAction(cbRequestBody));
+                                if (item.Value.Tags == null)
+                                    item.Value.Tags = new List<Tag>();
+                                item.Value.Tags.Add(chatbaseTag);
                             }
                         }
 
                     }
-                    if(agentMessages.Messages.Count > 0)
+                    if (agentMessages.Messages.Count > 0)
+                    {
                         item.Value.EnteringCustomActions.Add(_chatbaseExtension.GetAgentChatbaseCustomAction(agentMessages));
+                        if (item.Value.Tags == null)
+                            item.Value.Tags = new List<Tag>();
+                        item.Value.Tags.Add(chatbaseTag);
+                    }
+
 
 
                 }
@@ -279,7 +303,7 @@ namespace BuilderUtils.Services
             serialized = "{" + serialized.Substring(0, serialized.Length - 1) + "}";
             var exitName = path.Replace(".json", "EDIT.json");
             File.WriteAllText(exitName, serialized);
-            Console.WriteLine($"File saved with Path {exitName}"); 
+            Console.WriteLine($"File saved with Path {exitName}");
         }
 
 
