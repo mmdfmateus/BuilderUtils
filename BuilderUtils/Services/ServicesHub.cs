@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 
 namespace BuilderUtils.Services
@@ -132,7 +133,8 @@ namespace BuilderUtils.Services
 
         public static JObject GetChatbaseDeserialized()
         {
-            return JsonConvert.DeserializeObject<JObject>(File.ReadAllText($"{Directory.GetCurrentDirectory()}/chatbaserequestbody.json"));
+            var path = System.AppDomain.CurrentDomain.BaseDirectory + "../../../chatbaserequestbody.json";
+            return JsonConvert.DeserializeObject<JObject>(File.ReadAllText(path));
         }
 
         public void InsertExtrasEventTrack()
@@ -275,7 +277,7 @@ namespace BuilderUtils.Services
             }
 
             serialized = "{" + serialized.Substring(0, serialized.Length - 1) + "}";
-            var exitName = path + "EDIT.json";//Path.GetFullPath(path).Replace(Path.GetFileName(path), "") + path + "EDIT.json";
+            var exitName = path.Replace(".json", "EDIT.json");
             File.WriteAllText(exitName, serialized);
             Console.WriteLine($"File saved with Path {exitName}"); 
         }
