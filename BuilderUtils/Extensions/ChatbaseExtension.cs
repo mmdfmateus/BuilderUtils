@@ -65,7 +65,7 @@ namespace BuilderUtils.Extensions
                 {
                     Headers = { },
                     Method = "POST",
-                    Body = JsonConvert.SerializeObject(cbRequest),
+                    Body = JsonConvert.SerializeObject(cbRequest).Replace("\"{{calendar.unixTimeMilliseconds}}\"", "{{calendar.unixTimeMilliseconds}}"),
                     Uri = "{{config.chatbaseUrl}}"
                 }
             };
@@ -85,7 +85,7 @@ namespace BuilderUtils.Extensions
                 {
                     Headers = { },
                     Method = "POST",
-                    Body = JsonConvert.SerializeObject(cbRequest),
+                    Body = JsonConvert.SerializeObject(cbRequest).Replace("\"{{calendar.unixTimeMilliseconds}}\"", "{{calendar.unixTimeMilliseconds}}"),
                     Uri = "{{config.chatbaseUrl}}"
                 }
             };
