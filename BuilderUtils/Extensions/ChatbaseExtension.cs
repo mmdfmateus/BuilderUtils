@@ -43,7 +43,7 @@ namespace BuilderUtils.Extensions
                 Type = "agent",
                 Platform = "{{config.chatbasePlatform}}",
                 Message = (message == "") ? "" : message,
-                //Intent = (intent == "") ? "" : intent,
+                Intent = (intent == "") ? "" : intent,
                 //NotHandled = (notHandled) ? notHandled : false,
                 Version = "{{config.chatbaseVersion}}",
                 UserId = "{{contact.identity}}",
