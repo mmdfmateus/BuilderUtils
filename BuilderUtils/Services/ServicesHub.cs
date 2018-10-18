@@ -225,85 +225,111 @@ namespace BuilderUtils.Services
             Console.WriteLine("What is the FULL PATH of the exported .json file?");
             var path = Console.ReadLine();
 
-            var builderFlowJson = GetBuilderFlow(path);
-            var flow = _flowFactory.Build(builderFlowJson);
 
-            var cbRequestJson = GetChatbaseDeserialized();
-            var chatbaseRequest = _chatbaseRequestFactory.Build(cbRequestJson);
-            var agentMessages = new ChatbaseRequest();
-            var chatbaseTag = new Tag()
+            while (!Path.GetExtension(path).Equals(".json"))
             {
-                Background = "#ffce1e",
-                CanChangeBackground = false,
-                Id = "blip-tag-" + Guid.NewGuid().ToString(),
-                Label = "Chatbase",
-            };
+                Console.Beep();
+                Console.Write("File is not a JSON. Retry? (Y/N): ");
 
-            foreach (var box in flow.Boxes)
+                var answer = Console.ReadLine();
+                if (answer.ToUpper().Equals("Y")) path = Console.ReadLine();
+                else break;
+            }
+            if (Path.GetExtension(path).Equals(".json"))
             {
-                foreach (var item in box.Content)
+                try
                 {
-                    agentMessages.Messages.Clear();
-                    foreach (var customAction in item.Value.ContentActions)
+                    var builderFlowJson = GetBuilderFlow(path);
+                    var flow = _flowFactory.Build(builderFlowJson);
+                    var cbRequestJson = GetChatbaseDeserialized();
+                    var chatbaseRequest = _chatbaseRequestFactory.Build(cbRequestJson);
+
+                    Console.WriteLine("Do you want to configure the properties from Chatbase requests' body? (Y/N): ");
+                    var choice = Console.ReadLine();
+                    if (choice.ToUpper().Equals("Y"))
+                        chatbaseRequest = _chatbaseExtension.EditChatbaseProperties();
+
+                    var agentMessages = new ChatbaseRequest();
+                    var chatbaseTag = new Tag()
                     {
+                        Background = "#ffce1e",
+                        CanChangeBackground = false,
+                        Id = "blip-tag-" + Guid.NewGuid().ToString(),
+                        Label = "Chatbase",
+                    };
 
-                        if (customAction.Action != null)
+                    foreach (var box in flow.Boxes)
+                    {
+                        foreach (var item in box.Content)
                         {
-
-                            if (customAction.Action.Settings.Type != ComposingState)
+                            agentMessages.Messages.Clear();
+                            foreach (var customAction in item.Value.ContentActions)
                             {
-                                var agentMessage = "";
-                                if (customAction.Action.Type != "SendMessage")
+
+                                if (customAction.Action != null)
                                 {
-                                    agentMessage = customAction.Action.Settings.RawContent;
+
+                                    if (customAction.Action.Settings.Type != ComposingState)
+                                    {
+                                        var agentMessage = "";
+                                        if (customAction.Action.Type != "SendMessage")
+                                        {
+                                            agentMessage = customAction.Action.Settings.RawContent;
+                                        }
+                                        else
+                                        {
+                                            agentMessage = customAction.Action.CardContent.Document.Content.ToString();
+                                        }
+                                        agentMessages = _chatbaseExtension.GetAgentBodyRequest(agentMessages, message: agentMessage);
+                                    }
                                 }
-                                else
+                                else if (customAction.Input != null)
                                 {
-                                    agentMessage = customAction.Action.CardContent.Document.Content.ToString();
+
+                                    if (customAction.Input.Bypass == false)
+                                    {
+                                        var cbRequestBody = _chatbaseExtension.GetChatbaseBodyRequest(type: "user", message: "{{input.content}}");
+                                        item.Value.LeavingCustomActions.Add(_chatbaseExtension.GetUserChatbaseCustomAction(cbRequestBody));
+                                        if (item.Value.Tags == null)
+                                            item.Value.Tags = new List<Tag>();
+                                        item.Value.Tags.Add(chatbaseTag);
+                                    }
                                 }
-                                agentMessages = _chatbaseExtension.GetAgentBodyRequest(agentMessages, message: agentMessage);
+
                             }
-                        }
-                        else if (customAction.Input != null)
-                        {
-
-                            if (customAction.Input.Bypass == false)
+                            if (agentMessages.Messages.Count > 0)
                             {
-                                var cbRequestBody = _chatbaseExtension.GetChatbaseBodyRequest(type: "user", message: "{{input.content}}");
-                                item.Value.LeavingCustomActions.Add(_chatbaseExtension.GetUserChatbaseCustomAction(cbRequestBody));
+                                item.Value.EnteringCustomActions.Add(_chatbaseExtension.GetAgentChatbaseCustomAction(agentMessages));
                                 if (item.Value.Tags == null)
                                     item.Value.Tags = new List<Tag>();
-                                item.Value.Tags.Add(chatbaseTag);
+                                if (!item.Value.Tags.Contains(chatbaseTag))
+                                    item.Value.Tags.Add(chatbaseTag);
                             }
+
+
+
                         }
-
                     }
-                    if (agentMessages.Messages.Count > 0)
+
+                    flow.ParseProxyIntoFlow();
+
+                    var serialized = string.Empty;
+                    foreach (var box in flow.Boxes)
                     {
-                        item.Value.EnteringCustomActions.Add(_chatbaseExtension.GetAgentChatbaseCustomAction(agentMessages));
-                        if (item.Value.Tags == null)
-                            item.Value.Tags = new List<Tag>();
-                        item.Value.Tags.Add(chatbaseTag);
+                        var piece = JsonConvert.SerializeObject(box.Content);
+                        serialized = serialized + piece.Substring(1, piece.Length - 2) + ",";
                     }
 
-
-
+                    serialized = "{" + serialized.Substring(0, serialized.Length - 1) + "}";
+                    var exitName = path.Replace(".json", "EDIT.json");
+                    File.WriteAllText(exitName, serialized);
+                    Console.WriteLine($"File saved with Path {exitName}");
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
                 }
             }
-
-            flow.ParseProxyIntoFlow();
-
-            var serialized = string.Empty;
-            foreach (var box in flow.Boxes)
-            {
-                var piece = JsonConvert.SerializeObject(box.Content);
-                serialized = serialized + piece.Substring(1, piece.Length - 2) + ",";
-            }
-
-            serialized = "{" + serialized.Substring(0, serialized.Length - 1) + "}";
-            var exitName = path.Replace(".json", "EDIT.json");
-            File.WriteAllText(exitName, serialized);
-            Console.WriteLine($"File saved with Path {exitName}");
         }
 
 

@@ -66,7 +66,9 @@ namespace BuilderUtils.Extensions
                     Headers = { },
                     Method = "POST",
                     Body = JsonConvert.SerializeObject(cbRequest).Replace("\"{{calendar.unixTimeMilliseconds}}\"", "{{calendar.unixTimeMilliseconds}}"),
-                    Uri = "{{config.chatbaseUrl}}"
+                    Uri = "{{config.chatbaseUrl}}",
+                    ResponseStatusVariable = "chatbaseResponseStatus",
+                    ResponseBodyVariable = "chatbaseResponseBody"
                 }
             };
 
@@ -86,12 +88,18 @@ namespace BuilderUtils.Extensions
                     Headers = { },
                     Method = "POST",
                     Body = JsonConvert.SerializeObject(cbRequest).Replace("\"{{calendar.unixTimeMilliseconds}}\"", "{{calendar.unixTimeMilliseconds}}"),
-                    Uri = "{{config.chatbaseUrl}}"
+                    Uri = "{{config.chatbaseUrl}}",
+                    ResponseStatusVariable = "chatbaseResponseStatus",
+                    ResponseBodyVariable = "chatbaseResponseBody"
                 }
             };
 
             return action;
         }
 
+        public ChatbaseRequest EditChatbaseProperties()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
