@@ -34,19 +34,19 @@ namespace BuilderUtils.Models
     public partial class CBBoxContent
     {
         [JsonProperty("api_key")]
-        public string ApiKey { get; set; }
+        public string ApiKey { get; set; } = "{{config.chatbaseApiKey}}";
 
         [JsonProperty("type")]
         public string Type { get; set; }
 
         [JsonProperty("user_id")]
-        public string UserId { get; set; }
+        public string UserId { get; set; } = "{{contact.identity}}";
 
         [JsonProperty("time_stamp")]
-        public string TimeStamp { get; set; }
+        public string TimeStamp { get; set; } = "{{calendar.unixTimeMilliseconds}}";
 
         [JsonProperty("platform")]
-        public string Platform { get; set; }
+        public string Platform { get; set; } = "{{config.chatbasePlatform}}";
 
         [JsonProperty("message")]
         public string Message { get; set; }

@@ -244,7 +244,7 @@ namespace BuilderUtils.Services
                     var cbRequestJson = GetChatbaseDeserialized();
                     var chatbaseRequest = _chatbaseRequestFactory.Build(cbRequestJson);
 
-                    Console.WriteLine("Do you want to configure the properties from Chatbase requests' body? (Y/N): ");
+                    Console.WriteLine("Do you want to configure the properties from Chatbase requests body? (Y/N): ");
                     var choice = Console.ReadLine();
                     if (choice.ToUpper().Equals("Y"))
                         chatbaseRequest = _chatbaseExtension.EditChatbaseProperties();

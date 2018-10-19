@@ -4,6 +4,8 @@ using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using System.Reflection;
 using System.Text;
 
 namespace BuilderUtils.Extensions
@@ -99,7 +101,45 @@ namespace BuilderUtils.Extensions
 
         public ChatbaseRequest EditChatbaseProperties()
         {
-            throw new NotImplementedException();
+            var cbRequest = new CBBoxContent();
+
+            Console.WriteLine("\nSelect which of the properties below you want to edit with (Y/N)\n");
+
+            Console.WriteLine("     api_key: {{config.chatbaseApiKey}}");
+            if (Console.ReadLine().ToUpper().Equals("Y"))
+            {
+                Console.Write("     api_key: ");
+                cbRequest.ApiKey = Console.ReadLine();
+            }
+
+            Console.WriteLine("     user_id: {{contact.identity}}");
+            if (Console.ReadLine().ToUpper().Equals("Y"))
+            {
+                Console.Write("     user_id: ");
+                cbRequest.ApiKey = Console.ReadLine();
+            }
+
+
+            //PropertyInfo[] propertyInfo = cbRequest.GetType().GetProperties();
+
+            //foreach (var item in propertyInfo)
+            //{
+            //    var name = item.CustomAttributes.First().ConstructorArguments[0].ToString();
+            //    if (!(name != "\"type\"" || name != "\"message\"" || name != "\"intent\"" || name != "\"not_handled\""))
+            //    {
+
+            //        Console.WriteLine($"        {name} : \"{item.GetValue(cbRequest)}\"");
+            //        //Console.WriteLine("Change the item above? (Y/N):");
+            //        if (Console.ReadLine().ToUpper().Equals("Y"))
+            //        {
+            //            Console.Write($"         {name} : ");
+            //            var newValue = Console.Read();
+            //        }
+            //        var t = item.Name;
+            //    }
+            //}
+
+            return null;
         }
     }
 }
