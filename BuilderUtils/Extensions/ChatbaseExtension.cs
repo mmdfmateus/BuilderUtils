@@ -13,44 +13,33 @@ namespace BuilderUtils.Extensions
     public class ChatbaseExtension
     {
 
-        public ChatbaseRequest GetChatbaseBodyRequest(ChatbaseRequest cbRequest = null, string type = "", string message = "", bool notHandled = false, string intent = "")
+        public ChatbaseRequest GetChatbaseBodyRequest(CBBoxContent bodyContent, ChatbaseRequest cbRequest = null, string type = "", string message = "", bool notHandled = false, string intent = "")
         {
 
             if (cbRequest == null)
                 cbRequest = new ChatbaseRequest();
-            cbRequest.Messages.Add(new CBBoxContent()
-            {
-                ApiKey = "{{config.chatbaseApiKey}}",
-                Type = (type == "") ? "agent" : type,
-                Platform = "{{config.chatbasePlatform}}",
-                Message = (message == "") ? "{{input.content}}" : message,
-                Intent = (intent == "") ? "{{input.intent.name}}" : intent,
-                NotHandled = (notHandled) ? notHandled : false,
-                Version = "{{config.chatbaseVersion}}",
-                UserId = "{{contact.identity}}",
-                TimeStamp = "{{calendar.unixTimeMilliseconds}}",
-            });
+
+            bodyContent.Type = (type == "") ? "agent" : type;
+            bodyContent.Message = (message == "") ? "{{input.content}}" : message;
+            bodyContent.Intent = (intent == "") ? "{{input.intent.name}}" : intent;
+            bodyContent.NotHandled = (notHandled) ? notHandled : false;
+
+            cbRequest.Messages.Add(bodyContent);
 
             return cbRequest;
         }
 
-        public ChatbaseRequest GetAgentBodyRequest(ChatbaseRequest cbRequest = null, string message = "", bool notHandled = false, string intent = "")
+        public ChatbaseRequest GetAgentBodyRequest(CBBoxContent bodyContent, ChatbaseRequest cbRequest = null, string message = "", bool notHandled = false, string intent = "")
         {
 
             if (cbRequest == null || cbRequest.Messages.Count == 0)
                 cbRequest = new ChatbaseRequest();
-            cbRequest.Messages.Add(new CBBoxContent()
-            {
-                ApiKey = "{{config.chatbaseApiKey}}",
-                Type = "agent",
-                Platform = "{{config.chatbasePlatform}}",
-                Message = (message == "") ? "" : message,
-                Intent = (intent == "") ? "{{state.name}}" : intent,
-                //NotHandled = (notHandled) ? notHandled : false,
-                Version = "{{config.chatbaseVersion}}",
-                UserId = "{{contact.identity}}",
-                TimeStamp = "{{calendar.unixTimeMilliseconds}}",
-            });
+
+            bodyContent.Type = "agent";
+            bodyContent.Message = (message == "") ? "{{input.content}}" : message;
+            bodyContent.Intent = (intent == "") ? "{{input.intent.name}}" : intent;
+
+            cbRequest.Messages.Add(bodyContent);
 
             return cbRequest;
         }
@@ -99,47 +88,120 @@ namespace BuilderUtils.Extensions
             return action;
         }
 
-        public ChatbaseRequest EditChatbaseProperties()
+        private static void ClearCurrentLine()
         {
-            var cbRequest = new CBBoxContent();
+            Console.SetCursorPosition(0, Console.CursorTop - 1);
+            Console.Write(new string(' ', Console.WindowWidth));
+            Console.SetCursorPosition(0, Console.CursorTop - 1);
+        }
+
+        public CBBoxContent EditChatbaseProperties()
+        {
+            var cbBoxContent = new CBBoxContent()
+            {
+                ApiKey = "{{config.chatbaseApiKey}}",
+                UserId = "{{contact.identity}}",
+                TimeStamp = "{{calendar.unixTimeMilliseconds}}",
+                Platform = "{{config.chatbasePlatform}}",
+                Version = "{{config.chatbaseVersion}}"
+            };
 
             Console.WriteLine("\nSelect which of the properties below you want to edit with (Y/N)\n");
 
-            Console.WriteLine("     api_key: {{config.chatbaseApiKey}}");
-            if (Console.ReadLine().ToUpper().Equals("Y"))
+            #region Iteration through each propertie
+
+            Console.ForegroundColor = ConsoleColor.DarkRed;
+            Console.Write($"\t\tapi_key:    {cbBoxContent.ApiKey}  ");
+            Console.ResetColor();
+            if (Console.ReadLine().ToString().ToUpper().Equals("Y"))
             {
-                Console.Write("     api_key: ");
-                cbRequest.ApiKey = Console.ReadLine();
+                ClearCurrentLine();
+                Console.ForegroundColor = ConsoleColor.DarkGreen;
+                Console.Write("\t\tapi_key:    ");
+                cbBoxContent.ApiKey = Console.ReadLine();
+            }
+            else
+            {
+                ClearCurrentLine();
+                Console.ForegroundColor = ConsoleColor.DarkGreen;
+                Console.WriteLine($"\t\tapi_key:    {cbBoxContent.ApiKey}  ");
             }
 
-            Console.WriteLine("     user_id: {{contact.identity}}");
+            Console.ForegroundColor = ConsoleColor.DarkRed;
+            Console.Write($"\t\tuser_id:    {cbBoxContent.UserId}  ");
+            Console.ResetColor();
             if (Console.ReadLine().ToUpper().Equals("Y"))
             {
-                Console.Write("     user_id: ");
-                cbRequest.ApiKey = Console.ReadLine();
+                ClearCurrentLine();
+                Console.ForegroundColor = ConsoleColor.DarkGreen;
+                Console.WriteLine("\t\tuser_id:    ");
+                cbBoxContent.UserId = Console.ReadLine();
+            }
+            else
+            {
+                ClearCurrentLine();
+                Console.ForegroundColor = ConsoleColor.DarkGreen;
+                Console.WriteLine($"\t\tuser_id:    {cbBoxContent.UserId}  ");
+            }
+
+            Console.ForegroundColor = ConsoleColor.DarkRed;
+            Console.Write($"\t\ttime_stamp: {cbBoxContent.TimeStamp}  ");
+            Console.ResetColor();
+            if (Console.ReadLine().ToUpper().Equals("Y"))
+            {
+                ClearCurrentLine();
+                Console.ForegroundColor = ConsoleColor.DarkGreen;
+                Console.Write("\t\ttime_stamp: ");
+                cbBoxContent.TimeStamp = Console.ReadLine();
+            }
+            else
+            {
+                ClearCurrentLine();
+                Console.ForegroundColor = ConsoleColor.DarkGreen;
+                Console.WriteLine($"\t\ttime_stamp: {cbBoxContent.TimeStamp}  ");
+            }
+
+            Console.ForegroundColor = ConsoleColor.DarkRed;
+            Console.Write($"\t\tplatform:   {cbBoxContent.Platform}  ");
+            Console.ResetColor();
+            if (Console.ReadLine().ToUpper().Equals("Y"))
+            {
+                ClearCurrentLine();
+                Console.ForegroundColor = ConsoleColor.DarkGreen;
+                Console.Write("\t\tplatform:   ");
+                cbBoxContent.Platform = Console.ReadLine();
+            }
+            else
+            {
+                ClearCurrentLine();
+                Console.ForegroundColor = ConsoleColor.DarkGreen;
+                Console.WriteLine($"\t\tplatform:   {cbBoxContent.Platform}  ");
+            }
+
+            Console.ForegroundColor = ConsoleColor.DarkRed;
+            Console.Write($"\t\tversion:    {cbBoxContent.Version}  ");
+            Console.ResetColor();
+            if (Console.ReadLine().ToUpper().Equals("Y"))
+            {
+                ClearCurrentLine();
+                Console.ForegroundColor = ConsoleColor.DarkGreen;
+                Console.Write("\t\tversion:    ");
+                cbBoxContent.Version = Console.ReadLine();
+            }
+            else
+            {
+                ClearCurrentLine();
+                Console.ForegroundColor = ConsoleColor.DarkGreen;
+                Console.WriteLine($"\t\tversion:    {cbBoxContent.Version}  ");
             }
 
 
-            //PropertyInfo[] propertyInfo = cbRequest.GetType().GetProperties();
+            Console.WriteLine();
+            Console.ResetColor();
 
-            //foreach (var item in propertyInfo)
-            //{
-            //    var name = item.CustomAttributes.First().ConstructorArguments[0].ToString();
-            //    if (!(name != "\"type\"" || name != "\"message\"" || name != "\"intent\"" || name != "\"not_handled\""))
-            //    {
+            #endregion
 
-            //        Console.WriteLine($"        {name} : \"{item.GetValue(cbRequest)}\"");
-            //        //Console.WriteLine("Change the item above? (Y/N):");
-            //        if (Console.ReadLine().ToUpper().Equals("Y"))
-            //        {
-            //            Console.Write($"         {name} : ");
-            //            var newValue = Console.Read();
-            //        }
-            //        var t = item.Name;
-            //    }
-            //}
-
-            return null;
+            return cbBoxContent;
         }
     }
 }

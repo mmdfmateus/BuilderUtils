@@ -243,11 +243,22 @@ namespace BuilderUtils.Services
                     var flow = _flowFactory.Build(builderFlowJson);
                     var cbRequestJson = GetChatbaseDeserialized();
                     var chatbaseRequest = _chatbaseRequestFactory.Build(cbRequestJson);
+                    var cbRequestModel = new CBBoxContent();
 
-                    Console.WriteLine("Do you want to configure the properties from Chatbase requests body? (Y/N): ");
+                    Console.WriteLine("These are the properties from Chatbase requests body:\n");
+                    Console.ForegroundColor = ConsoleColor.DarkRed;
+                    Console.WriteLine("\t\tapi_key:    {{config.chatbaseApiKey}}");
+                    Console.WriteLine("\t\tuser_id:    {{contact.identity}}");
+                    Console.WriteLine("\t\ttime_stamp: {{calendar.unixTimeMilliseconds}}");
+                    Console.WriteLine("\t\tplatform:   {{config.chatbasePlatform}}");
+                    Console.WriteLine("\t\tversion:    {{config.chatbaseVersion}}");
+                    Console.ResetColor();
+
+
+                    Console.Write("\nDo you want to configure it? (Y/N): ");
                     var choice = Console.ReadLine();
                     if (choice.ToUpper().Equals("Y"))
-                        chatbaseRequest = _chatbaseExtension.EditChatbaseProperties();
+                        cbRequestModel = _chatbaseExtension.EditChatbaseProperties();
 
                     var agentMessages = new ChatbaseRequest();
                     var chatbaseTag = new Tag()
@@ -280,7 +291,7 @@ namespace BuilderUtils.Services
                                         {
                                             agentMessage = customAction.Action.CardContent.Document.Content.ToString();
                                         }
-                                        agentMessages = _chatbaseExtension.GetAgentBodyRequest(agentMessages, message: agentMessage);
+                                        agentMessages = _chatbaseExtension.GetAgentBodyRequest(cbRequestModel, agentMessages, message: agentMessage);
                                     }
                                 }
                                 else if (customAction.Input != null)
@@ -288,7 +299,7 @@ namespace BuilderUtils.Services
 
                                     if (customAction.Input.Bypass == false)
                                     {
-                                        var cbRequestBody = _chatbaseExtension.GetChatbaseBodyRequest(type: "user", message: "{{input.content}}");
+                                        var cbRequestBody = _chatbaseExtension.GetChatbaseBodyRequest(cbRequestModel, type: "user", message: "{{input.content}}");
                                         item.Value.LeavingCustomActions.Add(_chatbaseExtension.GetUserChatbaseCustomAction(cbRequestBody));
                                         if (item.Value.Tags == null)
                                             item.Value.Tags = new List<Tag>();
