@@ -59,7 +59,7 @@ namespace BuilderUtils.Models
 
 
         [JsonProperty("version")]
-        public string Version { get; set; }
+        public string Version { get; set; } = "{{config.chatbaseVersion}}";
 
 
     }

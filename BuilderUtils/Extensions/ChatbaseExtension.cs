@@ -13,11 +13,20 @@ namespace BuilderUtils.Extensions
     public class ChatbaseExtension
     {
 
-        public ChatbaseRequest GetChatbaseBodyRequest(CBBoxContent bodyContent, ChatbaseRequest cbRequest = null, string type = "", string message = "", bool notHandled = false, string intent = "")
+        public ChatbaseRequest GetChatbaseBodyRequest(CBBoxContent bodyContentModel, ChatbaseRequest cbRequest = null, string type = "", string message = "", bool notHandled = false, string intent = "")
         {
 
             if (cbRequest == null)
                 cbRequest = new ChatbaseRequest();
+
+            var bodyContent = new CBBoxContent()
+            {
+                ApiKey = bodyContentModel.ApiKey,
+                Platform = bodyContentModel.Platform,
+                TimeStamp = bodyContentModel.TimeStamp,
+                UserId = bodyContentModel.UserId,
+                Version = bodyContentModel.Version,
+            };
 
             bodyContent.Type = (type == "") ? "agent" : type;
             bodyContent.Message = (message == "") ? "{{input.content}}" : message;
@@ -29,11 +38,20 @@ namespace BuilderUtils.Extensions
             return cbRequest;
         }
 
-        public ChatbaseRequest GetAgentBodyRequest(CBBoxContent bodyContent, ChatbaseRequest cbRequest = null, string message = "", bool notHandled = false, string intent = "")
+        public ChatbaseRequest GetAgentBodyRequest(CBBoxContent bodyContentModel, ChatbaseRequest cbRequest = null, string message = "", bool notHandled = false, string intent = "")
         {
 
             if (cbRequest == null || cbRequest.Messages.Count == 0)
                 cbRequest = new ChatbaseRequest();
+
+            var bodyContent = new CBBoxContent()
+            {
+                ApiKey = bodyContentModel.ApiKey,
+                Platform = bodyContentModel.Platform,
+                TimeStamp = bodyContentModel.TimeStamp,
+                UserId = bodyContentModel.UserId,
+                Version = bodyContentModel.Version,
+            };
 
             bodyContent.Type = "agent";
             bodyContent.Message = (message == "") ? "{{input.content}}" : message;
