@@ -268,6 +268,7 @@ namespace BuilderUtils.Models
 
         [JsonProperty("content")]
         public object Content { get; set; }
+
         [JsonProperty("metadata")]
         public Dictionary<string, string> Metadata { get; set; }
 
@@ -349,6 +350,36 @@ namespace BuilderUtils.Models
 
         [JsonProperty("left")]
         public string Left { get; set; }
+    }
+
+    public partial class QuickReply
+    {
+        [JsonProperty("text")]
+        public string Text { get; set; }
+
+        [JsonProperty("scope")]
+        public string Scope { get; set; }
+
+        [JsonProperty("options")]
+        public List<Option> Options { get; set; }
+    }
+
+    public partial class Option
+    {
+        [JsonProperty("text")]
+        public string Text { get; set; }
+
+        [JsonProperty("previewText")]
+        public string PreviewText { get; set; }
+
+        [JsonProperty("value")]
+        public object Value { get; set; }
+
+        [JsonProperty("index")]
+        public long Index { get; set; }
+
+        [JsonProperty("type")]
+        public object Type { get; set; }
     }
 
     public partial class BlipBuilderFlow

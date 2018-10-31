@@ -17,6 +17,7 @@ namespace BuilderUtils.Services
         private static IChatbaseRequestFactory _chatbaseRequestFactory { get; set; }
 
         private ChatbaseExtension _chatbaseExtension;
+        private LimeAdapterExtension _limeAdapterExtension;
         private readonly string ComposingState = "application/vnd.lime.chatstate+json";
 
         public ServicesHub()
@@ -24,6 +25,7 @@ namespace BuilderUtils.Services
             _flowFactory = new BlipBuilderFlowFactory();
             _chatbaseRequestFactory = new ChatbaseRequestFactory();
             _chatbaseExtension = new ChatbaseExtension();
+            _limeAdapterExtension = new LimeAdapterExtension();
         }
 
         public void CreateOutputHub()
@@ -289,7 +291,16 @@ namespace BuilderUtils.Services
                                         }
                                         else
                                         {
-                                            agentMessage = customAction.Action.CardContent.Document.Content.ToString();
+                                            switch (customAction.Action.Settings.Type)
+                                            {
+                                                case "application/vnd.lime.select+json":
+                                                    agentMessage = _limeAdapterExtension.QuickReplyToString(customAction.Action.Settings.Content);
+                                                    break;
+                                                default:
+                                                    agentMessage = customAction.Action.CardContent.Document.Content.ToString();
+                                                    break;
+                                            }
+                                            //agentMessage = customAction.Action.CardContent.Document.Content.ToString();
                                         }
                                         agentMessages = _chatbaseExtension.GetAgentBodyRequest(cbRequestModel, agentMessages, message: agentMessage);
                                     }

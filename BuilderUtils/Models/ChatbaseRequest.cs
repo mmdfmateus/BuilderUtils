@@ -7,16 +7,12 @@ namespace BuilderUtils.Models
 {
     public class ChatbaseRequest
     {
-        //public CBBoxContent Content { get; set; }
         [JsonProperty("messages")]
         public List<CBBoxContent> Messages { get; set; }
-        //public Message Messages { get; set; }
 
         public ChatbaseRequest()
         {
-            //Content = new CBBoxContent();
             Messages = new List<CBBoxContent>();
-            //Messages = new Message();
         }
     }
 
