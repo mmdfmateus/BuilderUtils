@@ -343,7 +343,7 @@ namespace BuilderUtils.Services
                     }
 
                     serialized = "{" + serialized.Substring(0, serialized.Length - 1) + "}";
-                    var exitName = path.Replace(".json", "EDIT.json");
+                    var exitName = path.Replace(".json", "_chatbase.json");
                     File.WriteAllText(exitName, serialized);
                     Console.WriteLine($"File saved with Path {exitName}");
                 }
