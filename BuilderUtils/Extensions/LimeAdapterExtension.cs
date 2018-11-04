@@ -79,14 +79,20 @@ namespace BuilderUtils.Extensions
             }
         }
 
-        public string MenuToString(object deserializedJson)
+        public string LocationInputToString(object deserializedJson)
         {
-            throw new NotImplementedException();
-        }
+            try
+            {
+                var inputLocation = JsonConvert.DeserializeObject<InputLocation>(deserializedJson.ToString());
+                var medialinkString = $"*InputLocation*\n{inputLocation.Label.Value}";
 
-        public string CarrousselToString(object deserializedJson)
-        {
-            throw new NotImplementedException();
+                return medialinkString;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                throw;
+            }
         }
 
     }

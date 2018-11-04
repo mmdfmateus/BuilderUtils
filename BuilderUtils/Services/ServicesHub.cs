@@ -297,6 +297,9 @@ namespace BuilderUtils.Services
                                                 case MediaLink.MIME_TYPE:
                                                     agentMessage = _limeAdapterExtension.MediaLinkToString(customAction.Action.Settings.Content);
                                                     break;
+                                                case Lime.Messaging.Contents.Input.MIME_TYPE:
+                                                    agentMessage = _limeAdapterExtension.LocationInputToString(customAction.Action.Settings.Content);
+                                                    break;
                                                 case "application/vnd.lime.collection+json":
                                                     agentMessage = _limeAdapterExtension.DocumentCollectionToString(customAction.Action.Settings.Content);
                                                     break;

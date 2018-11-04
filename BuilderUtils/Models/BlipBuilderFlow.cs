@@ -475,6 +475,24 @@ namespace BuilderUtils.Models
         public Uri Uri { get; set; }
     }
 
+    public partial class InputLocation
+    {
+        [JsonProperty("label")]
+        public Label Label { get; set; }
+
+        [JsonProperty("validation")]
+        public Validation Validation { get; set; }
+    }
+
+    public partial class Validation
+    {
+        [JsonProperty("rule")]
+        public string Rule { get; set; }
+
+        [JsonProperty("type")]
+        public string Type { get; set; }
+    }
+
     public partial class BlipBuilderFlow
     {
         public static BlipBuilderFlow FromJson(string json) => JsonConvert.DeserializeObject<BlipBuilderFlow>(json);
