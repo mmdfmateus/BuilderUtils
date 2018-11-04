@@ -10,7 +10,7 @@ using System.Text;
 
 namespace BuilderUtils.Extensions
 {
-    public class ChatbaseExtension
+    public class ChatbaseExtension : IChatbaseExtension
     {
 
         public ChatbaseRequest GetChatbaseBodyRequest(CBBoxContent bodyContentModel, ChatbaseRequest cbRequest = null, string type = "", string message = "", bool notHandled = false, string intent = "")

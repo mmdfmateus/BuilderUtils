@@ -382,6 +382,87 @@ namespace BuilderUtils.Models
         public object Type { get; set; }
     }
 
+    public partial class DocumentCollection
+    {
+        [JsonProperty("itemType")]
+        public string ItemType { get; set; }
+
+        [JsonProperty("items")]
+        public List<Item> Items { get; set; }
+    }
+
+    public partial class Item
+    {
+        [JsonProperty("header")]
+        public Header Header { get; set; }
+
+        [JsonProperty("options")]
+        public List<Options> Options { get; set; }
+
+        [JsonProperty("id")]
+        public long Id { get; set; }
+
+        [JsonProperty("editing")]
+        public bool Editing { get; set; }
+    }
+
+    public partial class Header
+    {
+        [JsonProperty("type")]
+        public string Type { get; set; }
+
+        [JsonProperty("value")]
+        public Value Value { get; set; }
+    }
+
+    public partial class Value
+    {
+        [JsonProperty("title")]
+        public string Title { get; set; }
+
+        [JsonProperty("text")]
+        public string Text { get; set; }
+
+        [JsonProperty("type")]
+        public string Type { get; set; }
+
+        [JsonProperty("uri")]
+        public string Uri { get; set; }
+
+        [JsonProperty("aspectRatio")]
+        public string AspectRatio { get; set; }
+    }
+
+    public partial class Options
+    {
+        [JsonProperty("label")]
+        public Label Label { get; set; }
+
+        [JsonProperty("value", NullValueHandling = NullValueHandling.Ignore)]
+        public Label Value { get; set; }
+    }
+
+    public partial class Label
+    {
+        [JsonProperty("type")]
+        public string Type { get; set; }
+
+        [JsonProperty("value")]
+        public object Value { get; set; }
+    }
+
+    public partial class Weblink
+    {
+        [JsonProperty("title")]
+        public string Title { get; set; }
+
+        [JsonProperty("text")]
+        public string Text { get; set; }
+
+        [JsonProperty("uri")]
+        public Uri Uri { get; set; }
+    }
+
     public partial class BlipBuilderFlow
     {
         public static BlipBuilderFlow FromJson(string json) => JsonConvert.DeserializeObject<BlipBuilderFlow>(json);

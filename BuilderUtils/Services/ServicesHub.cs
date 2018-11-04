@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using Lime.Messaging.Contents;
 using System.Reflection;
 using System.Text;
 
@@ -16,9 +17,8 @@ namespace BuilderUtils.Services
         private static IBlipBuilderFlowFactory _flowFactory { get; set; }
         private static IChatbaseRequestFactory _chatbaseRequestFactory { get; set; }
 
-        private ChatbaseExtension _chatbaseExtension;
-        private LimeAdapterExtension _limeAdapterExtension;
-        private readonly string ComposingState = "application/vnd.lime.chatstate+json";
+        private IChatbaseExtension _chatbaseExtension;
+        private ILimeAdapterExtension _limeAdapterExtension;
 
         public ServicesHub()
         {
@@ -69,7 +69,7 @@ namespace BuilderUtils.Services
                     {
                         flow = _flowFactory.Build(builderFlowJson);
                     }
-                    catch (Exception ex)
+                    catch (Exception)
                     {
                         Console.Beep();
                         if (verbose) Console.Write($"File {path} is not a valid Builder Flow");
@@ -243,8 +243,6 @@ namespace BuilderUtils.Services
                 {
                     var builderFlowJson = GetBuilderFlow(path);
                     var flow = _flowFactory.Build(builderFlowJson);
-                    var cbRequestJson = GetChatbaseDeserialized();
-                    var chatbaseRequest = _chatbaseRequestFactory.Build(cbRequestJson);
                     var cbRequestModel = new CBBoxContent();
 
                     Console.WriteLine("These are the properties from Chatbase requests body:\n");
@@ -282,7 +280,7 @@ namespace BuilderUtils.Services
                                 if (customAction.Action != null)
                                 {
 
-                                    if (customAction.Action.Settings.Type != ComposingState)
+                                    if (customAction.Action.Settings.Type != ChatState.MIME_TYPE)
                                     {
                                         var agentMessage = "";
                                         if (customAction.Action.Type != "SendMessage")
@@ -293,8 +291,11 @@ namespace BuilderUtils.Services
                                         {
                                             switch (customAction.Action.Settings.Type)
                                             {
-                                                case "application/vnd.lime.select+json":
+                                                case Select.MIME_TYPE:
                                                     agentMessage = _limeAdapterExtension.QuickReplyToString(customAction.Action.Settings.Content);
+                                                    break;
+                                                case "application/vnd.lime.collection+json":
+                                                    agentMessage = _limeAdapterExtension.DocumentCollectionToString(customAction.Action.Settings.Content);
                                                     break;
                                                 default:
                                                     agentMessage = customAction.Action.CardContent.Document.Content.ToString();
