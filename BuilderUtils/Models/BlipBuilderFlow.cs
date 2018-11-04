@@ -463,6 +463,18 @@ namespace BuilderUtils.Models
         public Uri Uri { get; set; }
     }
 
+    public partial class Medialink
+    {
+        [JsonProperty("title")]
+        public string Title { get; set; }
+
+        [JsonProperty("type")]
+        public string Type { get; set; }
+
+        [JsonProperty("uri")]
+        public Uri Uri { get; set; }
+    }
+
     public partial class BlipBuilderFlow
     {
         public static BlipBuilderFlow FromJson(string json) => JsonConvert.DeserializeObject<BlipBuilderFlow>(json);

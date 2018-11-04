@@ -63,6 +63,22 @@ namespace BuilderUtils.Extensions
             }
         }
 
+        public string MediaLinkToString(object deserializedJson)
+        {
+            try
+            {
+                var mediaLink = JsonConvert.DeserializeObject<Medialink>(deserializedJson.ToString());
+                var medialinkString = $"*MediaLink*\n{mediaLink.Title} ({mediaLink.Uri})";
+
+                return medialinkString;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                throw;
+            }
+        }
+
         public string MenuToString(object deserializedJson)
         {
             throw new NotImplementedException();

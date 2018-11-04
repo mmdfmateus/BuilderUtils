@@ -6,5 +6,6 @@
         string DocumentCollectionToString(object deserializedJson);
         string MenuToString(object deserializedJson);
         string QuickReplyToString(object deserializedJson);
+        string MediaLinkToString(object content);
     }
 }
