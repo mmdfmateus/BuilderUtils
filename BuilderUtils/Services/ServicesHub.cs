@@ -261,12 +261,20 @@ namespace BuilderUtils.Services
                         cbRequestModel = _chatbaseExtension.EditChatbaseProperties();
 
                     var agentMessages = new ChatbaseRequest();
-                    var chatbaseTag = new Tag()
+                    var agentTag = new Tag()
                     {
-                        Background = "#ffce1e",
+                        Background = "#ffc700",
                         CanChangeBackground = false,
                         Id = "blip-tag-" + Guid.NewGuid().ToString(),
-                        Label = "Chatbase",
+                        Label = "Chatbase (Bot)",
+                    };
+
+                    var userTag = new Tag()
+                    {
+                        Background = "#a88300",
+                        CanChangeBackground = false,
+                        Id = "blip-tag-" + Guid.NewGuid().ToString(),
+                        Label = "Chatbase (Usuario)",
                     };
 
                     foreach (var box in flow.Boxes)
@@ -310,7 +318,6 @@ namespace BuilderUtils.Services
                                                     agentMessage = customAction.Action.CardContent.Document.Content.ToString();
                                                     break;
                                             }
-                                            //agentMessage = customAction.Action.CardContent.Document.Content.ToString();
                                         }
                                         agentMessages = _chatbaseExtension.GetAgentBodyRequest(cbRequestModel, agentMessages, message: agentMessage);
                                     }
@@ -324,7 +331,7 @@ namespace BuilderUtils.Services
                                         item.Value.LeavingCustomActions.Add(_chatbaseExtension.GetUserChatbaseCustomAction(cbRequestBody));
                                         if (item.Value.Tags == null)
                                             item.Value.Tags = new List<Tag>();
-                                        item.Value.Tags.Add(chatbaseTag);
+                                        item.Value.Tags.Add(userTag);
                                     }
                                 }
 
@@ -334,8 +341,8 @@ namespace BuilderUtils.Services
                                 item.Value.EnteringCustomActions.Add(_chatbaseExtension.GetAgentChatbaseCustomAction(agentMessages));
                                 if (item.Value.Tags == null)
                                     item.Value.Tags = new List<Tag>();
-                                if (!item.Value.Tags.Contains(chatbaseTag))
-                                    item.Value.Tags.Add(chatbaseTag);
+                                if (!item.Value.Tags.Contains(agentTag))
+                                    item.Value.Tags.Add(agentTag);
                             }
 
 
