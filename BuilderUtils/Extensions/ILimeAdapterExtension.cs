@@ -6,5 +6,6 @@
         string QuickReplyToString(object deserializedJson);
         string MediaLinkToString(object content);
         string LocationInputToString(object content);
+        string WebLinkToString(object content);
     }
 }

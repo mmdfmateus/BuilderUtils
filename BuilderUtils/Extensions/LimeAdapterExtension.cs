@@ -41,8 +41,8 @@ namespace BuilderUtils.Extensions
                     {
                         if (option.Label.Type == WebLink.MIME_TYPE)
                         {
-                            var weblink = JsonConvert.DeserializeObject<Weblink>(option.Label.Value.ToString());
-                            carrousselString += $"{weblink.Text}";
+                            var weblinkString = WebLinkToString(option.Label.Value);
+                            carrousselString += $"{weblinkString}";
                         }
                         else
                         {
@@ -87,6 +87,21 @@ namespace BuilderUtils.Extensions
                 var medialinkString = $"*InputLocation*\n{inputLocation.Label.Value}";
 
                 return medialinkString;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                throw;
+            }
+        }
+
+        public string WebLinkToString(object deserializedJson)
+        {
+            try
+            {
+                var weblink = JsonConvert.DeserializeObject<Weblink>(deserializedJson.ToString());
+                var weblinkString = $"*WebLink*\n{weblink.Title} ({weblink.Uri})";
+                return weblinkString;
             }
             catch (Exception e)
             {

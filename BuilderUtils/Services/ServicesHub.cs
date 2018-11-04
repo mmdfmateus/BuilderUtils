@@ -300,6 +300,9 @@ namespace BuilderUtils.Services
                                                 case Lime.Messaging.Contents.Input.MIME_TYPE:
                                                     agentMessage = _limeAdapterExtension.LocationInputToString(customAction.Action.Settings.Content);
                                                     break;
+                                                case WebLink.MIME_TYPE:
+                                                    agentMessage = _limeAdapterExtension.WebLinkToString(customAction.Action.Settings.Content);
+                                                    break;
                                                 case "application/vnd.lime.collection+json":
                                                     agentMessage = _limeAdapterExtension.DocumentCollectionToString(customAction.Action.Settings.Content);
                                                     break;
